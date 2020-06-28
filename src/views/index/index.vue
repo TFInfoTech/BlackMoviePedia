@@ -109,7 +109,7 @@
                     });
             },
             getMovies() {
-                var query = {key: 'c593975e77917bcb4c0f0df95792c4681c0e17a8'}
+                var query = {}
                 mservice.fetchList(query).then(response => {
                     console.log("response", response)
                 })

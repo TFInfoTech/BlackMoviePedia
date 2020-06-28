@@ -4,7 +4,7 @@ import router from "../router"
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_URL, // api 的 VUE_APP_URL
-  timeout: 50000 // 请求超时时间(因为需要调试后台,所以设置得比较大)
+  timeout: 50000, // 请求超时时间(因为需要调试后台,所以设置得比较大)
 });
 
 // request拦截器,在请求之前做一些处理
@@ -13,6 +13,11 @@ service.interceptors.request.use(
     if (store.state.token) {
       // 给请求头添加laohu-token
       config.headers["user-token"] = store.state.token;
+    }
+    console.log('process.env.API_KEY', process.env.VUE_APP_DEFAULT_PARAM)
+    config.params = {
+      key: process.env.VUE_APP_DEFAULT_PARAM,
+      ...config.params
     }
     return config;
   },
