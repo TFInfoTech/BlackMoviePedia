@@ -26,6 +26,7 @@
 
 <script>
     import Footer from "@/components/Footer";
+    import * as mservice from '@/api/movie'
     // import { Tabbar, TabbarItem } from "vant";
     // import { Tab, Tabs } from "vant";
 
@@ -89,6 +90,7 @@
         mounted() {
             console.log('Current Swiper instance object', this.swiper)
             this.swiper.slideTo(3, 1000, false)
+            this.getMovies()
         },
         methods: {
             onchange(index) {
@@ -105,6 +107,12 @@
                     .catch(err => {
                         console.log("err", err);
                     });
+            },
+            getMovies() {
+                var query = {key: 'c593975e77917bcb4c0f0df95792c4681c0e17a8'}
+                mservice.fetchList(query).then(response => {
+                    console.log("response", response)
+                })
             }
         }
     };

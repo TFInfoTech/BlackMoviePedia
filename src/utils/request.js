@@ -1,6 +1,6 @@
-// import axios from "axios";
-import store from "../store";
-import router from "../router";
+import axios from "axios"
+import store from "../store"
+import router from "../router"
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_URL, // api 的 VUE_APP_URL
@@ -28,9 +28,10 @@ service.interceptors.response.use(
     /**
      * code为非20000是抛错 可结合自己业务进行修改
      */
-    const res = response.data;
-    if (res.code == "666") {
-      return res;
+    // console.log('response', response)
+    const res = response;
+    if (res.status == "200") {
+      return res.data.data;
     } else if (res.code == "603") {
       // code为603代表token已经失效,
       // 提示用户,然后跳转到登陆页面
