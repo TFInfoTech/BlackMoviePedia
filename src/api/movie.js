@@ -2,11 +2,19 @@ import request from '@/utils/request'
 
 export function fetchList(query) {
   return request({
-    url: '/movie/getHomeFilmBillList',
+      url: '/shnh/dydata/webapi/movie/getMovie',
     method: 'get',
     params: query
   })
 }
+export function fetchPhotoByName(query) {
+    return request({
+        url: '/shnh/dydata/webapi/photo/getPhotoList',
+        method: 'get',
+        params: query
+    })
+}
+
 
 export function fetchObject(id) {
   return request({

@@ -13,11 +13,13 @@
                       :value="item.saleDate" />
         </van-list>-->
         <swiper ref="mySwiper" :options="swiperOptions">
-            <swiper-slide><img src="../../assets/img/nature-1.jpg" class="slide-image" /></swiper-slide>
-            <swiper-slide><img src="../../assets/img/nature-2.jpg" class="slide-image" /></swiper-slide>
+            <swiper-slide v-for="(item,index) in FilePhotoList" :key="index">
+                <img :src="item.url" class="slide-image" />
+            </swiper-slide>
+            <!--<swiper-slide><img src="../../assets/img/nature-2.jpg" class="slide-image" /></swiper-slide>
             <swiper-slide><img src="../../assets/img/nature-3.jpg" class="slide-image" /></swiper-slide>
             <swiper-slide><img src="../../assets/img/nature-4.jpg" class="slide-image" /></swiper-slide>
-            <swiper-slide><img src="../../assets/img/nature-5.jpg" class="slide-image" /></swiper-slide>
+            <swiper-slide><img src="../../assets/img/nature-5.jpg" class="slide-image" /></swiper-slide>-->
             <div class="swiper-pagination" slot="pagination"></div>
         </swiper>
         <Footer page="index"></Footer>
@@ -25,39 +27,23 @@
 </template>
 
 <script>
+    import slider_item from "@/components/slider_item";
     import Footer from "@/components/Footer";
     import * as mservice from '@/api/movie'
     // import { Tabbar, TabbarItem } from "vant";
     // import { Tab, Tabs } from "vant";
 
     export default {
-        // components: {
-        //   [Tab.name]: Tab,
-        //   [Tabs.name]: Tabs
-        // },
+        components: {
+            Slideritem: slider_item,
+
+        },
         name: 'carrousel',
         data() {
             return {
+                FilePhotoList: [],
                 active: 0,
                 list: [],
-                // 樱桃
-                list1: [
-                    { name: "樱桃机械键盘1", price: 400, saleDate: 1566893214215 },
-                    { name: "樱桃机械键盘2", price: 500, saleDate: 1566892214215 },
-                    { name: "樱桃机械键盘3", price: 800, saleDate: 1566893215215 }
-                ],
-                // 牧马人
-                list2: [
-                    { name: "牧马人机械键盘1", price: 200, saleDate: 1566893214215 },
-                    { name: "牧马人机械键盘2", price: 500, saleDate: 1566893114215 }
-                ],
-                // 雷蛇
-                list3: [
-                    { name: "雷蛇机械键盘1", price: 200, saleDate: 1566893214215 },
-                    { name: "雷蛇机械键盘2", price: 500, saleDate: 1566193214215 },
-                    { name: "雷蛇机械键盘3", price: 400, saleDate: 1566393212215 },
-                    { name: "雷蛇机械键盘4", price: 800, saleDate: 1566892214215 }
-                ],
                 swiperOptions: {
                     effect: 'cube',
                     grabCursor: true,
@@ -110,8 +96,26 @@
             },
             getMovies() {
                 var query = {}
+                query.type = '黑白'
                 mservice.fetchList(query).then(response => {
                     console.log("response", response)
+                    let filmlist = response;
+                    for (let i = 0; i < filmlist.length; i++) {
+                        let queryphoto = {}
+                        queryphoto.freetext = filmlist[i].name;
+                        mservice.fetchPhotoByName(queryphoto).then(response => {
+                            console.log("fetchPhotoByName", response);
+                            let photos = response;
+                            for (let i = 0; i < photos.length; i++) {
+                                if (photos[i].imgPath != null) {
+                                    let urlitem = {};
+                                    urlitem.url=photos[i].imgPath
+                                    this.FilePhotoList.push(urlitem);
+                                }
+                            }
+                        })
+                    }
+
                 })
             }
         }
@@ -148,9 +152,9 @@
         background-position: center;
         background-size: cover;
     }
+
     .slide-image {
         width: 300px;
         height: 650px
     }
-
 </style>
