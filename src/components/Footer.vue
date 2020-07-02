@@ -10,13 +10,13 @@
     <li class="item">
       <router-link to="/cart" class="flex2 aic f20 text" active-class="active">
         <van-icon class="text" name="shopping-cart-o"></van-icon>
-        <p class="mt-5 text f12">购物车</p>
+        <p class="mt-5 text f12">演员</p>
       </router-link>
     </li>
     <li class="item">
       <router-link to="/my" class="flex2 aic f20 text" active-class="active">
         <van-icon class="text" name="user-o"></van-icon>
-        <p class="mt-5 text f12">我的</p>
+        <p class="mt-5 text f12">电影</p>
       </router-link>
     </li>
     <!-- <li class="item">

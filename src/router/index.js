@@ -12,22 +12,23 @@ const router = new Router({
         },
         {
             path: "/index",
-            component: () => import("@/views/detail/index"),
+            component: () => import("@/views/index/index"),
             meta: {
-                title: "黑白电影详情",
+                title: "黑白电影百科",
                 // 缓存首页
                 keepAlive: true
             }
         },
         {
             path: "/index",
-            component: () => import("@/views/index/index"),
+            component: () => import("@/views/detail/index"),
             meta: {
-                title: "黑白电影百科",
+                title: "黑白电影详情",
                 // 缓存首页
-           
+
             }
         },
+
         {
             path: "/cart",
             meta: {
