@@ -143,7 +143,7 @@
     }
 
     body {
-        background: #fff;
+        background: rgba(173, 166, 166, 0.438);
         font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
         font-size: 14px;
         color: #000;
@@ -156,15 +156,15 @@
         }
 
     .swiper-container {
-        width: 300px;
-        height: 500px;
+        width: 85%;
+        height: 80%;
     }
 
     .swiper-slide {
         background-position: center;
         background-size: cover;
         background-image: url(../../assets/img/MovieBackground.jpg);
-        border-radius: 20px;
+        border-radius: 5px;
     }
 
     .slide-image {
@@ -180,11 +180,11 @@
     }
 
     .swiper-button-next {
-        right: -10px;
+        right: -20px;
     }
 
     .swiper-button-prev {
-        left: -10px;
+        left: -20px;
     }
 
     .swiper-button-prev, .swiper-button-next {
