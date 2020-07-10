@@ -16,7 +16,7 @@ import "amfe-flexible";
 
 // import style
 import 'swiper/css/swiper.css'
-
+import '@/assets/style/common.css'
 Vue.use(VueAwesomeSwiper)
 
 Vue.prototype.$axios = $axios;

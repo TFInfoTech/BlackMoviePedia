@@ -12,11 +12,20 @@ const router = new Router({
         },
         {
             path: "/index",
+            component: () => import("@/views/movielist/index"),
+            meta: {
+                title: "黑白电影列表",
+                // 缓存首页
+                keepAlive: true
+            }
+        },
+        {
+            path: "/index",
             component: () => import("@/views/index/index"),
             meta: {
                 title: "黑白电影百科",
                 // 缓存首页
-                keepAlive: true
+                
             }
         },
         {
