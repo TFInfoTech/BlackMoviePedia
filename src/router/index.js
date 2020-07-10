@@ -12,22 +12,23 @@ const router = new Router({
         },
         {
             path: "/index",
-            component: () => import("@/views/movielist/index"),
+            component: () => import("@/views/index/index"),
             meta: {
-                title: "黑白电影列表",
+                title: "黑白电影百科",
                 // 缓存首页
                 keepAlive: true
             }
         },
         {
             path: "/index",
-            component: () => import("@/views/index/index"),
+            component: () => import("@/views/movielist/index"),
             meta: {
-                title: "黑白电影百科",
+                title: "黑白电影列表",
                 // 缓存首页
                 
             }
         },
+     
         {
             path: "/index",
             component: () => import("@/views/detail/index"),
@@ -39,11 +40,11 @@ const router = new Router({
         },
 
         {
-            path: "/cart",
+            path: "/movielist",
             meta: {
-                title: "购物车"
+                title: "黑白电影列表"
             },
-            component: () => import("@/views/cart/index")
+            component: () => import("@/views/movielist/index")
         },
         {
             path: "/my",

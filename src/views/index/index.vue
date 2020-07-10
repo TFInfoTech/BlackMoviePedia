@@ -1,17 +1,5 @@
 <template>
     <div style="height:100%" class="flexClass">
-        <!--<van-tabs v-model="active" @change="onchange">
-            <van-tab title="樱桃"></van-tab>
-            <van-tab title="牧马人"></van-tab>
-            <van-tab title="雷蛇"></van-tab>
-        </van-tabs>
-
-        <van-list style="margin-top: 10px;">
-            <van-cell v-for="(item,index) in list"
-                      :key="index"
-                      :title="item.name"
-                      :value="item.saleDate" />
-        </van-list>-->
         <swiper ref="mySwiper" :options="swiperOptions">
             <swiper-slide v-for="(item,index) in FilePhotoList" :key="index" class="flexClass">
                 <img :src="item.url" class="slide-image" :data-uri="item.filmuri" :data-name="item.filmName" />
@@ -33,7 +21,7 @@
     export default {
         components: {
             Slideritem: slider_item,
-
+            Footer
         },
         name: 'carrousel',
         data() {
@@ -75,9 +63,6 @@
             let index = this.active + 1;
             this.list = this[`list${index}`]; // this.list1
             vm = this;
-        },
-        components: {
-            Footer
         },
         computed: {
             swiper() {
@@ -134,8 +119,8 @@
 
 <style>
 
-<<<<<<< HEAD
-=======
+/*<<<<<<< HEAD
+=======*/
     html, body {
         /*position: relative;*/
         width: 100%;
@@ -192,5 +177,5 @@
     .swiper-button-prev, .swiper-button-next {
         color: grey;
     }
->>>>>>> 6128e8b3dd97baa80217a7fb87e8c504784cd947
+/*>>>>>>> 6128e8b3dd97baa80217a7fb87e8c504784cd947*/
 </style>

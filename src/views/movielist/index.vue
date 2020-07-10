@@ -5,18 +5,20 @@
                 <img :src="item.url" class="slide-image" :data-uri="item.filmuri" :data-name="item.filmName" />
             </swiper-slide>
         </swiper>
+        <Footer></Footer>
     </div>
 </template>
 
 <script>
     import slider_item from "@/components/slider_item";
-    import * as mservice from '@/api/movie'
+    import * as mservice from '@/api/movie';
+    import Footer from "@/components/Footer";
     export default {
         name: 'swiper-example-centered-auto',
         title: 'Centered slides + Auto slides per view',
         components: {
             Slideritem: slider_item,
-
+            Footer
         },
         data() {
             return {

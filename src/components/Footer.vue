@@ -8,7 +8,7 @@
       </router-link>
     </li>
     <li class="item">
-      <router-link to="/cart" class="flex2 aic f20 text" active-class="active">
+      <router-link to="/movielist" class="flex2 aic f20 text" active-class="active">
         <van-icon class="text" name=""></van-icon>
         <i class="el-icon-video-camera"></i>
         <p class="mt-5 text f12">影片</p>
