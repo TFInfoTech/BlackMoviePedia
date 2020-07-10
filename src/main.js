@@ -8,6 +8,8 @@ import $axios from "@/utils/request";
 import mixin from "./mixin/index";
 import store from "./store/index";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 import "@/components/Vant";
 // rem

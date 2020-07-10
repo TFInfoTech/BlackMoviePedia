@@ -134,4 +134,63 @@
 
 <style>
 
+<<<<<<< HEAD
+=======
+    html, body {
+        /*position: relative;*/
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: rgba(173, 166, 166, 0.438);
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+        body div {
+            height: 100%
+        }
+
+    .swiper-container {
+        width: 85%;
+        height: 80%;
+    }
+
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        background-image: url(../../assets/img/MovieBackground.jpg);
+        border-radius: 5px;
+    }
+
+    .slide-image {
+        width: 90%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .flexClass {
+        display: flex;
+        align-items: center; /*定义body的元素垂直居中*/
+        justify-content: center; /*定义body的里的元素水平居中*/
+    }
+
+    .swiper-button-next {
+        right: -20px;
+    }
+
+    .swiper-button-prev {
+        left: -20px;
+    }
+
+    .swiper-button-prev, .swiper-button-next {
+        color: grey;
+    }
+>>>>>>> 6128e8b3dd97baa80217a7fb87e8c504784cd947
 </style>

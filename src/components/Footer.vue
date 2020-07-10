@@ -9,14 +9,15 @@
     </li>
     <li class="item">
       <router-link to="/cart" class="flex2 aic f20 text" active-class="active">
-        <van-icon class="text" name="shopping-cart-o"></van-icon>
-        <p class="mt-5 text f12">演员</p>
+        <van-icon class="text" name=""></van-icon>
+        <i class="el-icon-video-camera"></i>
+        <p class="mt-5 text f12">影片</p>
       </router-link>
     </li>
     <li class="item">
       <router-link to="/my" class="flex2 aic f20 text" active-class="active">
         <van-icon class="text" name="user-o"></van-icon>
-        <p class="mt-5 text f12">电影</p>
+        <p class="mt-5 text f12">演员</p>
       </router-link>
     </li>
     <!-- <li class="item">
@@ -40,6 +41,7 @@ export default {};
   bottom: 0;
   width: 100%;
   bottom: 0;
+  background: rgba(14, 13, 13, 0.733);
   .text {
     color: #797d82;
   }
