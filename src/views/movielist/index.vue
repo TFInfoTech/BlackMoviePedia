@@ -50,7 +50,7 @@
                 FilePhotoList: [],
                 swiperOption: {
                     slidesPerView: 2,
-                    spaceBetween: 30,
+                    spaceBetween: 20,
                     centeredSlides: true,
                     pagination: {
                         el: '.swiper-pagination',
@@ -96,10 +96,10 @@
                             console.log('this.FilePhotoList', this.FilePhotoList)
                         })
 
-                       
+
                         console.log("queryuri", queryuri);
-                        mservice.fetchFilmDetailByFilmURI(queryuri).then(res => {
-                            console.log("fetchFilmDetailByFilmURI", res);
+                        mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
+                            console.log('fetchFilmDetailByFilmURI', response);
                             //let photos = response;
                             //for (let j = 0; j < photos.length; j++) {
                             //    if (photos[j].imgPath != null) {
