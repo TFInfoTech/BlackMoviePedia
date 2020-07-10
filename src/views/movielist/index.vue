@@ -1,12 +1,36 @@
 <template>
-    <div style="height:100%">
-        <swiper class="swiper" :options="swiperOption">
-            <swiper-slide v-for="(item,index) in FilePhotoList" :key="index" class="flexClass">
-                <img :src="item.url" class="slide-image" :data-uri="item.filmuri" :data-name="item.filmName" />
-            </swiper-slide>
-        </swiper>
+    <el-container>
+        <el-header>黑白电影简析</el-header>
+        <el-main>
+            <swiper class="swiper" :options="swiperOption">
+                <swiper-slide v-for="(item,index) in FilePhotoList" :key="index" class="flexClass">
+                    <!-- <img :src="item.url" class="slide-image" :data-uri="item.filmuri" :data-name="item.filmName" />-->
+                    <el-card :body-style="{ padding: '0px' }">
+                        <img :src="item.url" class="image" :data-uri="item.filmuri" :data-name="item.filmName">
+                        <div style="padding: 14px;">
+                            <span>{{item.filmName}}</span>
+                            <div class="bottom clearfix">
+                                <time class="time">{{ item.filmdate }}</time>
+                            </div>
+                        </div>
+                    </el-card>
+                </swiper-slide>
+            </swiper>
+        </el-main>
+        <div class="test_two_box">
+            <el-card :body-style="{ padding: '0px' }">
+                <video id="myVideo"
+                       class="video-js">
+                    <source src="//vjs.zencdn.net/v/oceans.mp4"
+                            type="video/mp4">
+                </video>
+                <div style="padding: 14px;">
+                    1电影名字
+                </div>
+            </el-card>
+        </div>
         <Footer></Footer>
-    </div>
+    </el-container>
 </template>
 
 <script>
@@ -22,6 +46,7 @@
         },
         data() {
             return {
+                currentDate: new Date(),
                 FilePhotoList: [],
                 swiperOption: {
                     slidesPerView: 2,
@@ -35,7 +60,8 @@
             }
         },
         mounted() {
-            this.getMovies()
+            this.getMovies();
+            this.initVideo();
         },
         methods: {
             getMovies() {
@@ -49,6 +75,8 @@
                         let queryphoto = {};
                         queryphoto.freetext = filmlist[i].name;
                         queryphoto.filmuri = filmlist[i].uri;
+                        let queryuri = {};
+                        queryuri.uri = filmlist[i].uri;
                         mservice.fetchPhotoByName(queryphoto).then(response => {
                             console.log("fetchPhotoByName", response);
                             let photos = response;
@@ -58,6 +86,7 @@
                                     urlitem.filmuri = queryphoto.filmuri;
                                     urlitem.filmName = queryphoto.freetext;
                                     urlitem.url = photos[j].imgPath;
+                                    urlitem.filmdate = photos[j].date;
                                     list.push(urlitem);
                                     break;
                                 }
@@ -66,22 +95,63 @@
                             this.FilePhotoList = this.FilePhotoList.concat(list);
                             console.log('this.FilePhotoList', this.FilePhotoList)
                         })
+
+                       
+                        console.log("queryuri", queryuri);
+                        mservice.fetchFilmDetailByFilmURI(queryuri).then(res => {
+                            console.log("fetchFilmDetailByFilmURI", res);
+                            //let photos = response;
+                            //for (let j = 0; j < photos.length; j++) {
+                            //    if (photos[j].imgPath != null) {
+                            //        let urlitem = {};
+                            //        urlitem.filmuri = queryphoto.filmuri;
+                            //        urlitem.filmName = queryphoto.freetext;
+                            //        urlitem.url = photos[j].imgPath;
+                            //        urlitem.filmdate = photos[j].date;
+                            //        list.push(urlitem);
+                            //        break;
+                            //    }
+                            //}
+                            //this.FilePhotoList.splice(0, this.FilePhotoList.length);
+                            //this.FilePhotoList = this.FilePhotoList.concat(list);
+                            //console.log('this.FilePhotoList', this.FilePhotoList)
+                        })
                     }
 
                 })
+
+
             },
+            initVideo() {
+                //初始化视频方法
+                let myPlayer = this.$video(myVideo, {
+                    //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
+                    controls: true,
+                    //自动播放属性,muted:静音播放
+                    autoplay: "muted",
+                    //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
+                    preload: "auto",
+                    //设置视频播放器的显示宽度（以像素为单位）
+                    width: "400px",
+                    //设置视频播放器的显示高度（以像素为单位）
+                    height: "200px"
+                });
+            }
+
         }
     }
 </script>
 
 <style scoped>
     .swiper-container {
-        width: 300px;
-        height: 200px;
+        width: 400px;
+        height: 250px;
     }
+
     .swiper-slide {
         background-image: none;
     }
+
     .swiper-slide {
         width: 60%;
     }
@@ -93,4 +163,35 @@
         .swiper-slide:nth-child(3n) {
             width: 20%;
         }
+
+    .time {
+        font-size: 13px;
+        color: #999;
+    }
+
+    .bottom {
+        margin-top: 13px;
+        line-height: 12px;
+    }
+
+    .button {
+        padding: 0;
+        float: right;
+    }
+
+    .image {
+        width: 100%;
+        height: 75%;
+        display: block;
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+        display: table;
+        content: "";
+    }
+
+    .clearfix:after {
+        clear: both
+    }
 </style>

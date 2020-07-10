@@ -138,9 +138,9 @@
         padding: 0;
     }
 
-        body div {
+        /*body div {
             height: 100%
-        }
+        }*/
 
     .swiper-container {
         width: 85%;

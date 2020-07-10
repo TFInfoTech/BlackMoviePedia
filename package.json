@@ -19,6 +19,7 @@
     "element-ui": "^2.13.2",
     "style-loader": "^1.0.0",
     "swiper": "^5.4.5",
+    "video.js": "^7.8.4",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^4.1.1",
     "vuex-persistedstate": "^2.5.4"
