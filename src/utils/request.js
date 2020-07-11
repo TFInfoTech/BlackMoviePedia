@@ -33,10 +33,13 @@ service.interceptors.response.use(
     /**
      * code为非20000是抛错 可结合自己业务进行修改
      */
-    // console.log('response', response)
+    console.log('response', response)
     const res = response;
     if (res.status == "200") {
-      return res.data.data;
+      if (res.data.data)
+        return res.data.data
+      else if (res.data.result)
+      return res.data.result.data
     } else if (res.code == "603") {
       // code为603代表token已经失效,
       // 提示用户,然后跳转到登陆页面
