@@ -17,7 +17,7 @@
                 </swiper-slide>
             </swiper>
         </el-main>
-        <el-card :body-style="{ padding: '0px' }">
+        <!--<el-card :body-style="{ padding: '0px' }">
             <video id="myVideo"
                    class="video-js">
                 <source src="http://img.library.sh.cn/dy/video/mv2ctivyawltih5l/movie.m3u8" type="application/x-mpegURL">
@@ -25,17 +25,18 @@
             <div style="padding: 14px;">
                 123
             </div>
-        </el-card>
-        <div class="test_two_box" v-for="(item,index) in VideoList">
-            <!--<el-card :body-style="{ padding: '0px' }">
-            <video :id="'myVideo'+index"
-                   class="video-js">
-                <source :src="item.videouri" type="application/x-mpegURL">
-            </video>
-            <div style="padding: 14px;">
-                {{item.filmname}}
-            </div>
         </el-card>-->
+        <div class="test_two_box" v-for="(item,index) in VideoList">
+            <el-card :body-style="{ padding: '0px' }">
+                <video :id="'myVideo'+index"
+                       class="video-js">
+                    <source :src="item.videouri" type="application/x-mpegURL">
+                </video>
+                <div style="padding: 14px;">
+                    {{item.filmname}}&nbsp;{{item.date}}
+                </div>
+                <div>{{item.contributor}}</div>
+            </el-card>
 
         </div>
         <Footer></Footer>
@@ -71,7 +72,7 @@
         },
         mounted() {
             this.getMovies();
-            this.initVideo();
+
         },
         methods: {
             getMovies() {
@@ -108,19 +109,24 @@
                         })
 
 
-                        console.log("queryuri", queryuri);                     
+                        console.log("queryuri", queryuri);
                         mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
                             console.log('fetchFilmDetailByFilmURI', response);
                             if (response[0].video) {
                                 let videoitem = {};
                                 videoitem.videouri = response[0].video[0].videoPath;
                                 videoitem.filmname = response[0].title;
+                                videoitem.contributor = '';
+                                videoitem.date = response[0].date;
+                                for (let k = 0; k < response[0].contributor.length; k++) {
+                                    videoitem.contributor += response[0].contributor[k] + '  ';
+                                }
                                 listvideo.push(videoitem);
-
                             }
                             this.VideoList.splice(0, this.VideoList.length);
                             this.VideoList = this.VideoList.concat(listvideo);
                             console.log('this.VideoList', this.VideoList)
+                            this.initVideo();
                         })
                     }
 
@@ -131,7 +137,8 @@
             initVideo() {
                 //初始化视频方法
                 //for (let i = 0; i < this.VideoList.length; i++) {
-                let myPlayer =this.$video("myVideo", {
+                this.VideoList.map((item, i) => {
+                    let myPlayer = this.$video('myVideo' + i, {
                         //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
                         controls: true,
                         //自动播放属性,muted:静音播放
@@ -144,8 +151,8 @@
                         height: "200px"
                     });
                 }
-            //}
-
+                )
+            }
         }
     }
 </script>
