@@ -28,16 +28,22 @@
         </el-card>-->
         <div class="test_two_box" v-for="(item,index) in VideoList">
             <el-card :body-style="{ padding: '0px' }">
-                <video :id="'myVideo'+index"
-                       class="video-js">
-                    <source :src="item.videouri" type="application/x-mpegURL">
-                </video>
-                <div style="padding: 14px;">
-                    {{item.filmname}}&nbsp;{{item.date}}
-                </div>
-                <div>{{item.contributor}}</div>
-            </el-card>
+                <el-row :gutter="20">
+                    <el-col :span="24">
+                        <video :id="'myVideo'+index"
+                               class="video-js">
+                            <source :src="item.videouri" type="application/x-mpegURL">
+                        </video>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="20" style="padding:14px">
+                    <el-col :span="16">{{item.filmname}}</el-col>
+                    <el-col :span="8">{{item.date}}</el-col>
+                </el-row>
+                <div style="font-size:x-small;float:right">{{item.contributor}}</div>
 
+            </el-card>
+            <br />
         </div>
         <Footer></Footer>
     </el-container>
@@ -71,8 +77,9 @@
             }
         },
         mounted() {
-            this.getMovies();
-
+            //this.getMovies();
+            //this.GETA();
+            this.getMoviesasync();
         },
         methods: {
             getMovies() {
@@ -107,9 +114,6 @@
                             this.FilePhotoList = this.FilePhotoList.concat(list);
                             console.log('this.FilePhotoList', this.FilePhotoList)
                         })
-
-
-                        console.log("queryuri", queryuri);
                         mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
                             console.log('fetchFilmDetailByFilmURI', response);
                             if (response[0].video) {
@@ -126,19 +130,55 @@
                             this.VideoList.splice(0, this.VideoList.length);
                             this.VideoList = this.VideoList.concat(listvideo);
                             console.log('this.VideoList', this.VideoList)
-                            this.initVideo();
+                            this.initVideo(this.VideoList);
                         })
+
                     }
 
                 })
 
 
             },
-            initVideo() {
+            getMoviesasync() {
+                let query = {};
+                query.type = '黑白';
+                let that = this;
+                this.GetFilmList(query).then(function (result) {
+                    let filmlist = result;
+                    console.log('filmlist', filmlist);
+                    let photolist = [];
+                    let listvideo = [];
+                    for (let i = 0; i < filmlist.length; i++) {
+                        let queryphoto = {};
+                        queryphoto.freetext = filmlist[i].name;
+                        queryphoto.filmuri = filmlist[i].uri;
+                        let queryuri = {};
+                        queryuri.uri = filmlist[i].uri;
+
+                        that.GetPhotoByName(queryphoto).then(function (result) {
+                            if (JSON.stringify(result) != '{}') {
+                                photolist.push(result)
+                            }
+                        });
+
+                        that.GetFilmDetailByFilmURI(queryuri).then(function (result) {
+                            if (JSON.stringify(result) != '{}') {
+                                listvideo.push(result)
+                            }
+                        });
+                    }
+                    that.FilePhotoList = photolist;
+                    that.VideoList = listvideo;
+                    console.log('photolist', that.FilePhotoList);
+                    console.log('VideoList', that.VideoList);
+                    that.initVideo(that.VideoList,that);
+                });
+            },
+            initVideo(videolist,that) {
                 //初始化视频方法
                 //for (let i = 0; i < this.VideoList.length; i++) {
-                this.VideoList.map((item, i) => {
-                    let myPlayer = this.$video('myVideo' + i, {
+                videolist.map((item, i) => {
+                    let myPlayer = that.$video('myVideo' + i, {
                         //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
                         controls: true,
                         //自动播放属性,muted:静音播放
@@ -152,6 +192,62 @@
                     });
                 }
                 )
+            },
+            async GetFilmDetailByFilmURI(queryuri) {
+                let videoitem = {};
+                await mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
+                    console.log('bbb', response)
+                    if (response[0].video) {
+                        videoitem.videouri = response[0].video[0].videoPath;
+                        videoitem.filmname = response[0].title;
+                        videoitem.contributor = '';
+                        videoitem.date = response[0].date;
+                        for (let k = 0; k < response[0].contributor.length; k++) {
+                            videoitem.contributor += response[0].contributor[k] + '  ';
+                        }
+                    }
+
+                })
+                return videoitem;
+            },
+            async GetPhotoByName(queryphoto) {
+                let urlitem = {};
+                await mservice.fetchPhotoByName(queryphoto).then(response => {
+                    console.log("fetchPhotoByName", response);
+                    let photos = response;
+                    for (let j = 0; j < photos.length; j++) {
+                        if (photos[j].imgPath != null) {
+                            urlitem.filmuri = queryphoto.filmuri;
+                            urlitem.filmName = queryphoto.freetext;
+                            urlitem.url = photos[j].imgPath;
+                            urlitem.filmdate = photos[j].date;
+                            break;
+                        }
+                    }
+                });
+                return urlitem;
+            },
+            async GetFilmList(query) {
+                let filmlist = [];
+                await mservice.fetchList(query).then(response => {
+                    console.log("response", response)
+                    filmlist = response;
+                })
+                return filmlist;
+            },
+            GETA() {
+                let queryuri = {};
+                queryuri.uri = 'http://data.library.sh.cn/dy/resource/movie/futcughzte0332ie';
+
+                let queryphoto = {};
+                queryphoto.freetext = '风云儿女';
+                let query = {};
+                query.type = '黑白'
+
+                console.log('GetFilmDetailByFilmURI', this.GetFilmDetailByFilmURI(queryuri));
+                console.log('GetPhotoByName', this.GetPhotoByName(queryphoto));
+
+                console.log('filmlist', this.GetFilmList(query));
             }
         }
     }
