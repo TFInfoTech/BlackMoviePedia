@@ -17,7 +17,7 @@ export function fetchPhotoByName(query) {
 
 export function fetchFilmDetailByFilmURI(query) {
     return request({
-        url: '/data/jsonld',
+        url: '/shnh/dydata/webapi/movie/movieDetail',
         method: 'get',
         params: query
     })

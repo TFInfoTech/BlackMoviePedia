@@ -17,17 +17,26 @@
                 </swiper-slide>
             </swiper>
         </el-main>
-        <div class="test_two_box">
-            <el-card :body-style="{ padding: '0px' }">
-                <video id="myVideo"
-                       class="video-js">
-                    <source src="//vjs.zencdn.net/v/oceans.mp4"
-                            type="video/mp4">
-                </video>
-                <div style="padding: 14px;">
-                    1电影名字
-                </div>
-            </el-card>
+        <el-card :body-style="{ padding: '0px' }">
+            <video id="myVideo"
+                   class="video-js">
+                <source src="http://img.library.sh.cn/dy/video/mv2ctivyawltih5l/movie.m3u8" type="application/x-mpegURL">
+            </video>
+            <div style="padding: 14px;">
+                123
+            </div>
+        </el-card>
+        <div class="test_two_box" v-for="(item,index) in VideoList">
+            <!--<el-card :body-style="{ padding: '0px' }">
+            <video :id="'myVideo'+index"
+                   class="video-js">
+                <source :src="item.videouri" type="application/x-mpegURL">
+            </video>
+            <div style="padding: 14px;">
+                {{item.filmname}}
+            </div>
+        </el-card>-->
+
         </div>
         <Footer></Footer>
     </el-container>
@@ -48,6 +57,7 @@
             return {
                 currentDate: new Date(),
                 FilePhotoList: [],
+                VideoList: [],
                 swiperOption: {
                     slidesPerView: 2,
                     spaceBetween: 20,
@@ -67,6 +77,7 @@
             getMovies() {
                 var query = {};
                 let list = [];
+                let listvideo = [];
                 query.type = '黑白'
                 mservice.fetchList(query).then(response => {
                     console.log("response", response)
@@ -97,24 +108,19 @@
                         })
 
 
-                        console.log("queryuri", queryuri);
+                        console.log("queryuri", queryuri);                     
                         mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
                             console.log('fetchFilmDetailByFilmURI', response);
-                            //let photos = response;
-                            //for (let j = 0; j < photos.length; j++) {
-                            //    if (photos[j].imgPath != null) {
-                            //        let urlitem = {};
-                            //        urlitem.filmuri = queryphoto.filmuri;
-                            //        urlitem.filmName = queryphoto.freetext;
-                            //        urlitem.url = photos[j].imgPath;
-                            //        urlitem.filmdate = photos[j].date;
-                            //        list.push(urlitem);
-                            //        break;
-                            //    }
-                            //}
-                            //this.FilePhotoList.splice(0, this.FilePhotoList.length);
-                            //this.FilePhotoList = this.FilePhotoList.concat(list);
-                            //console.log('this.FilePhotoList', this.FilePhotoList)
+                            if (response[0].video) {
+                                let videoitem = {};
+                                videoitem.videouri = response[0].video[0].videoPath;
+                                videoitem.filmname = response[0].title;
+                                listvideo.push(videoitem);
+
+                            }
+                            this.VideoList.splice(0, this.VideoList.length);
+                            this.VideoList = this.VideoList.concat(listvideo);
+                            console.log('this.VideoList', this.VideoList)
                         })
                     }
 
@@ -124,19 +130,21 @@
             },
             initVideo() {
                 //初始化视频方法
-                let myPlayer = this.$video(myVideo, {
-                    //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
-                    controls: true,
-                    //自动播放属性,muted:静音播放
-                    autoplay: "muted",
-                    //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
-                    preload: "auto",
-                    //设置视频播放器的显示宽度（以像素为单位）
-                    width: "400px",
-                    //设置视频播放器的显示高度（以像素为单位）
-                    height: "200px"
-                });
-            }
+                //for (let i = 0; i < this.VideoList.length; i++) {
+                let myPlayer =this.$video("myVideo", {
+                        //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
+                        controls: true,
+                        //自动播放属性,muted:静音播放
+                        autoplay: "muted",
+                        //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
+                        preload: "auto",
+                        //设置视频播放器的显示宽度（以像素为单位）
+                        width: "400px",
+                        //设置视频播放器的显示高度（以像素为单位）
+                        height: "200px"
+                    });
+                }
+            //}
 
         }
     }
