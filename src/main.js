@@ -15,6 +15,7 @@ import "@/components/Vant";
 import "amfe-flexible";
 // 把变量挂载到vue的原型上
 import Video from 'video.js'
+import VideoPlayer from 'vue-video-player'
 
 
 
@@ -22,6 +23,14 @@ import Video from 'video.js'
 import 'swiper/css/swiper.css'
 import '@/assets/style/common.css'
 import 'video.js/dist/video-js.css'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
+
+//const hls = require("videojs-contrib-hls")
+import hls from 'videojs-contrib-hls'
+
+Vue.use(VideoPlayer)
+Vue.use(hls)
 Vue.use(VueAwesomeSwiper)
 
 Vue.use(ElementUi);
