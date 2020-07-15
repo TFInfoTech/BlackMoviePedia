@@ -45,12 +45,12 @@
             </el-card>
             <br />
         </div>
-        <div>
+        <!--<div>
             <video-player class="video-player vjs-custom-skin"
                           ref="videoPlayer"
                           :playsinline="true"
                           :options="playerOptions"></video-player>
-        </div>
+        </div>-->
         <Footer></Footer>
     </el-container>
 </template>
