@@ -26,11 +26,11 @@
                 123
             </div>
         </el-card>-->
-        <div class="test_two_box" v-for="(item,index) in VideoList" >
+        <div class="test_two_box" v-for="(item,index) in VideoList" :key="index">
             <el-card :body-style="{ padding: '0px' }">
                 <el-row :gutter="20">
                     <el-col :span="24">
-                        <video :id="'myVideo'+index"
+                        <video :id="'myVideo'+index" controls=true autoplay="muted" preload="auto" width="400px" height="200px" data-setup='{}'
                                class="video-js">
                             <source :src="item.videouri" type="application/x-mpegURL">
                         </video>
@@ -117,7 +117,7 @@
         mounted() {
             //this.getMovies();
             //this.GETA();
-            this.getMoviesasync();
+            this.getMoviesasync()
         },
         methods: {
             getMovies() {
@@ -213,27 +213,6 @@
                     // that.initVideo(that.VideoList, that);
                 });
             },
-            initVideo(videolist, that) {
-                var dddd=videolist
-                //初始化视频方法
-                for (let i = 0; i < videolist.length; i++) {
-                    //videolist.map((item, i) => {
-                    console.log('i', i)
-                    let myPlayer = that.$video('myVideo' + i, {
-                        //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
-                        controls: true,
-                        //自动播放属性,muted:静音播放
-                        autoplay: "muted",
-                        //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
-                        preload: "auto",
-                        //设置视频播放器的显示宽度（以像素为单位）
-                        width: "400px",
-                        //设置视频播放器的显示高度（以像素为单位）
-                        height: "200px"
-                    });
-                }
-                // )
-            },
             async GetFilmDetailByFilmURI(queryuri) {
                 let videoitem = {};
                 await mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
@@ -256,13 +235,15 @@
                 await mservice.fetchPhotoByName(queryphoto).then(response => {
                     console.log("fetchPhotoByName", response);
                     let photos = response;
-                    for (let j = 0; j < photos.length; j++) {
-                        if (photos[j].imgPath != null) {
-                            urlitem.filmuri = queryphoto.filmuri;
-                            urlitem.filmName = queryphoto.freetext;
-                            urlitem.url = photos[j].imgPath;
-                            urlitem.filmdate = photos[j].date;
-                            break;
+                    if (photos){
+                        for (let j = 0; j < photos.length; j++) {
+                            if (photos[j].imgPath != null) {
+                                urlitem.filmuri = queryphoto.filmuri;
+                                urlitem.filmName = queryphoto.freetext;
+                                urlitem.url = photos[j].imgPath;
+                                urlitem.filmdate = photos[j].date;
+                                break;
+                            }
                         }
                     }
                 });
@@ -289,6 +270,9 @@
                 console.log('GetPhotoByName', this.GetPhotoByName(queryphoto));
 
                 console.log('filmlist', this.GetFilmList(query));
+            },
+            LoadVideo (){
+                console.log('LoadVideo', LoadVideo);
             }
         },
         watch:{
@@ -299,19 +283,16 @@
                 for (let i = 0; i < videolist.length; i++) {
                     //videolist.map((item, i) => {
                     console.log('i', i)
-                    let myPlayer = this.$video('myVideo' + i, {
-                        //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
-                        controls: true,
-                        //自动播放属性,muted:静音播放
-                        autoplay: "muted",
-                        //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
-                        preload: "auto",
-                        //设置视频播放器的显示宽度（以像素为单位）
-                        width: "400px",
-                        //设置视频播放器的显示高度（以像素为单位）
-                        height: "200px"
-                    });
-                }                
+                    var timer
+                    clearTimeout(timer);  //清除延迟执行 
+
+                    timer = setTimeout(()=>{   //设置延迟执行
+
+                    let myPlayer = this.$video('myVideo' + i);
+
+                    },1000);
+
+                }  
             }
         }
     }
