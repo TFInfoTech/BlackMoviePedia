@@ -16,6 +16,8 @@ import "amfe-flexible";
 // 把变量挂载到vue的原型上
 import Video from 'video.js'
 import VideoPlayer from 'vue-video-player'
+import common from './common/common'
+
 
 
 
@@ -41,6 +43,7 @@ Vue.mixin(mixin);
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$common = common 
 new Vue({
   store,
   router,

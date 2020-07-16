@@ -56,7 +56,6 @@
 
 <script>
     import slider_item from "@/components/slider_item";
-    import * as mservice from '@/api/movie';
     import Footer from "@/components/Footer";
     export default {
         name: 'swiper-example-centered-auto',
@@ -122,7 +121,7 @@
                 let query = {};
                 query.type = '黑白';
                 let that = this;
-                this.GetFilmList(query).then(function (result) {
+                this.$common.GetFilmList(query).then(function (result) {
                     let filmlist = result;
                     console.log('filmlist', filmlist);
                     let photolist = [];
@@ -134,13 +133,13 @@
                         let queryuri = {};
                         queryuri.uri = filmlist[i].uri;
 
-                        that.GetPhotoByName(queryphoto).then(function (result) {
+                        that.$common.GetPhotoByName(queryphoto).then(function (result) {
                             if (JSON.stringify(result) != '{}') {
                                 photolist.push(result)
                             }
                         });
 
-                        that.GetFilmDetailByFilmURI(queryuri).then(function (result) {
+                        that.$common.GetFilmDetailByFilmURI(queryuri).then(function (result) {
                             if (JSON.stringify(result) != '{}') {
                                 listvideo.push(result)
                             }
@@ -153,54 +152,7 @@
                     console.log('that.VideoList.length', listvideo.length)
                 });
             },
-            async GetFilmDetailByFilmURI(queryuri) {
-                let videoitem = {};
-                await mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
-                    console.log('1111111', response)
-                    if (response.result == "0") {
-                        let videoinfo = response.data;
-                        if (videoinfo[0].video) {
-                            videoitem.videouri = videoinfo[0].video[0].videoPath;
-                            videoitem.filmname = videoinfo[0].title;
-                            videoitem.contributor = '';
-                            videoitem.date = videoinfo[0].date;
-                            for (let k = 0; k < videoinfo[0].contributor.length; k++) {
-                                videoitem.contributor += videoinfo[0].contributor[k] + '  ';
-                            }
-                        }
-                    }
 
-                })
-                return videoitem;
-            },
-            async GetPhotoByName(queryphoto) {
-                let urlitem = {};
-                await mservice.fetchPhotoByName(queryphoto).then(response => {
-                    //console.log("queryphoto", queryphoto);
-                    console.log("fetchPhotoByName", response);
-                    if (response.result == "0") {
-                        let photos = response.data;
-                        for (let j = 0; j < photos.length; j++) {
-                            if (photos[j].imgPath != null) {
-                                urlitem.filmuri = queryphoto.filmuri;
-                                urlitem.filmName = queryphoto.freetext;
-                                urlitem.url = photos[j].imgPath;
-                                urlitem.filmdate = photos[j].date;
-                                break;
-                            }
-                        }
-                    }
-                });
-                return urlitem;
-            },
-            async GetFilmList(query) {
-                let filmlist = [];
-                await mservice.fetchList(query).then(response => {
-                    if (response.result == "0")
-                        filmlist = response.data;
-                })
-                return filmlist;
-            },
             GETA() {
                 let queryuri = {};
                 queryuri.uri = 'http://data.library.sh.cn/dy/resource/movie/futcughzte0332ie';
