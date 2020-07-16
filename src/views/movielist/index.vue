@@ -1,15 +1,15 @@
 <template>
     <el-container>
-        <el-header>黑白电影简析</el-header>
+        <el-header class="main-title">黑白影墙</el-header>
         <el-main>
             <swiper class="swiper" :options="swiperOption">
                 <swiper-slide v-for="(item,index) in FilePhotoList" :key="index" class="flexClass">
                     <el-card :body-style="{ padding: '0px' }">
                         <img :src="item.url" class="image" :data-uri="item.filmuri" :data-name="item.filmName">
                         <div style="padding: 14px;">
-                            <span>{{item.filmName}}</span>
+                            <span class="film-title">{{item.filmName}}</span>
                             <div class="bottom clearfix">
-                                <time class="time">{{ item.filmdate }}</time>
+                                <time class="film-attribute">{{ item.filmdate }}</time>
                             </div>
                         </div>
                     </el-card>
@@ -36,10 +36,12 @@
                     </el-col>
                 </el-row>
                 <el-row :gutter="20" style="padding:14px">
-                    <el-col :span="16">{{item.filmname}}</el-col>
-                    <el-col :span="8">{{item.date}}</el-col>
+                    <el-col :span="16" class="film-title">{{item.filmname}}</el-col>
+                    <el-col :span="8" class="film-title">{{item.date}}</el-col>
                 </el-row>
-                <div style="font-size:x-small;float:right">{{item.contributor}}</div>
+                <el-row :gutter="20" style="padding-left:14px;padding-bottom:2px">
+                    <el-col :span="24" class="film-attribute">{{item.contributor}}</el-col>
+                </el-row>                
 
             </el-card>
             <br />
@@ -50,6 +52,7 @@
                           :playsinline="true"
                           :options="playerOptions"></video-player>
         </div>-->
+        <div style="height:50px"/>
         <Footer></Footer>
     </el-container>
 </template>
@@ -72,7 +75,7 @@
                 swiperOption: {
                     slidesPerView: 2,
                     spaceBetween: 20,
-                    centeredSlides: true,
+                    centeredSlides: false,
                     pagination: {
                         el: '.swiper-pagination',
                         clickable: true
@@ -211,7 +214,7 @@
             width: 20%;
         }
 
-    .time {
+    .film-attribute {
         font-size: 13px;
         color: #999;
     }
