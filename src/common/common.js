@@ -48,4 +48,15 @@ export default { //公开
         })
         return filmlist;
     },
+    async GetURIDetail(query) {
+        let res;
+        await mservice.fetchURIDetailByURI(query).then(response => {
+            res = response.result.data;
+        })
+        return res;
+    },
+    unique(arr,index) {
+        const res = new Map();
+        return arr.filter((arr) => !res.has(arr[index]) && res.set(arr[index], 1));
+    },
 }

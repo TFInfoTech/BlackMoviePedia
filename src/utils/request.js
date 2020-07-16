@@ -14,7 +14,7 @@ service.interceptors.request.use(
             // 给请求头添加laohu-token
             config.headers["user-token"] = store.state.token;
         }
-        console.log('process.env.API_KEY', process.env.VUE_APP_DEFAULT_PARAM)
+        //console.log('process.env.API_KEY', process.env.VUE_APP_DEFAULT_PARAM)
         config.params = {
             key: process.env.VUE_APP_DEFAULT_PARAM,
             ...config.params
@@ -33,7 +33,7 @@ service.interceptors.response.use(
         /**
          * code为非20000是抛错 可结合自己业务进行修改
          */
-        console.log('response', response)
+        //console.log('response', response)
         const res = response;
         if (res.status == "200") {
             //if (res.result == '-1')

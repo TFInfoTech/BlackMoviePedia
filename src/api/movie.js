@@ -22,7 +22,13 @@ export function fetchFilmDetailByFilmURI(query) {
         params: query
     })
 }
-
+export function fetchURIDetailByURI(query) {
+    return request({
+        url: '/data/jsonld',
+        method: 'get',
+        params: query
+    })
+}
 export function fetchObject(id) {
     return request({
         url: '/vue-element-admin/article/detail',

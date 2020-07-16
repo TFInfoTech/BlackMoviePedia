@@ -47,6 +47,13 @@ const router = new Router({
             component: () => import("@/views/movielist/index")
         },
         {
+            path: "/actor",
+            meta: {
+                title: "黑白电影列表"
+            },
+            component: () => import("@/views/actor/index")
+        },
+        {
             path: "/my",
             component: () => import("@/views/my/index"),
             redirect: "/my/center",
