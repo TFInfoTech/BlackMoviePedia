@@ -4,7 +4,6 @@
         <el-main>
             <swiper class="swiper" :options="swiperOption">
                 <swiper-slide v-for="(item,index) in FilePhotoList" :key="index" class="flexClass">
-                    <!-- <img :src="item.url" class="slide-image" :data-uri="item.filmuri" :data-name="item.filmName" />-->
                     <el-card :body-style="{ padding: '0px' }">
                         <img :src="item.url" class="image" :data-uri="item.filmuri" :data-name="item.filmName">
                         <div style="padding: 14px;">
@@ -101,7 +100,7 @@
                         //    // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
                         //}
                     ],
-                    hls: true, 
+                    hls: true,
                     poster: "../../assets/img/nature-7.jpg", //你的封面地址
                     // width: document.documentElement.clientWidth, //播放器宽度
                     notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
@@ -115,68 +114,10 @@
             }
         },
         mounted() {
-            //this.getMovies();
             //this.GETA();
             this.getMoviesasync()
         },
         methods: {
-            getMovies() {
-                var query = {};
-                let list = [];
-                let listvideo = [];
-                query.type = '黑白'
-                mservice.fetchList(query).then(response => {
-                    console.log("response", response)
-                    let filmlist = response;
-                    for (let i = 0; i < filmlist.length; i++) {
-                        let queryphoto = {};
-                        queryphoto.freetext = filmlist[i].name;
-                        queryphoto.filmuri = filmlist[i].uri;
-                        let queryuri = {};
-                        queryuri.uri = filmlist[i].uri;
-                        mservice.fetchPhotoByName(queryphoto).then(response => {
-                            console.log("fetchPhotoByName", response);
-                            let photos = response;
-                            for (let j = 0; j < photos.length; j++) {
-                                if (photos[j].imgPath != null) {
-                                    let urlitem = {};
-                                    urlitem.filmuri = queryphoto.filmuri;
-                                    urlitem.filmName = queryphoto.freetext;
-                                    urlitem.url = photos[j].imgPath;
-                                    urlitem.filmdate = photos[j].date;
-                                    list.push(urlitem);
-                                    break;
-                                }
-                            }
-                            this.FilePhotoList.splice(0, this.FilePhotoList.length);
-                            this.FilePhotoList = this.FilePhotoList.concat(list);
-                            console.log('this.FilePhotoList', this.FilePhotoList)
-                        })
-                        mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
-                            console.log('fetchFilmDetailByFilmURI', response);
-                            if (response[0].video) {
-                                let videoitem = {};
-                                videoitem.videouri = response[0].video[0].videoPath;
-                                videoitem.filmname = response[0].title;
-                                videoitem.contributor = '';
-                                videoitem.date = response[0].date;
-                                for (let k = 0; k < response[0].contributor.length; k++) {
-                                    videoitem.contributor += response[0].contributor[k] + '  ';
-                                }
-                                listvideo.push(videoitem);
-                            }
-                            this.VideoList.splice(0, this.VideoList.length);
-                            this.VideoList = this.VideoList.concat(listvideo);
-                            console.log('this.VideoList', this.VideoList)
-                            this.initVideo(this.VideoList, this);
-                        })
-
-                    }
-
-                })
-
-
-            },
             getMoviesasync() {
                 let query = {};
                 query.type = '黑白';
@@ -210,20 +151,22 @@
                     console.log('photolist', that.FilePhotoList);
                     console.log('VideoList', that.VideoList);
                     console.log('that.VideoList.length', listvideo.length)
-                    // that.initVideo(that.VideoList, that);
                 });
             },
             async GetFilmDetailByFilmURI(queryuri) {
                 let videoitem = {};
                 await mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
-                    console.log('bbb', response)
-                    if (response[0].video) {
-                        videoitem.videouri = response[0].video[0].videoPath;
-                        videoitem.filmname = response[0].title;
-                        videoitem.contributor = '';
-                        videoitem.date = response[0].date;
-                        for (let k = 0; k < response[0].contributor.length; k++) {
-                            videoitem.contributor += response[0].contributor[k] + '  ';
+                    console.log('1111111', response)
+                    if (response.result == "0") {
+                        let videoinfo = response.data;
+                        if (videoinfo[0].video) {
+                            videoitem.videouri = videoinfo[0].video[0].videoPath;
+                            videoitem.filmname = videoinfo[0].title;
+                            videoitem.contributor = '';
+                            videoitem.date = videoinfo[0].date;
+                            for (let k = 0; k < videoinfo[0].contributor.length; k++) {
+                                videoitem.contributor += videoinfo[0].contributor[k] + '  ';
+                            }
                         }
                     }
 
@@ -233,9 +176,10 @@
             async GetPhotoByName(queryphoto) {
                 let urlitem = {};
                 await mservice.fetchPhotoByName(queryphoto).then(response => {
+                    //console.log("queryphoto", queryphoto);
                     console.log("fetchPhotoByName", response);
-                    let photos = response;
-                    if (photos){
+                    if (response.result == "0") {
+                        let photos = response.data;
                         for (let j = 0; j < photos.length; j++) {
                             if (photos[j].imgPath != null) {
                                 urlitem.filmuri = queryphoto.filmuri;
@@ -252,8 +196,8 @@
             async GetFilmList(query) {
                 let filmlist = [];
                 await mservice.fetchList(query).then(response => {
-                    console.log("response", response)
-                    filmlist = response;
+                    if (response.result == "0")
+                        filmlist = response.data;
                 })
                 return filmlist;
             },
@@ -271,28 +215,23 @@
 
                 console.log('filmlist', this.GetFilmList(query));
             },
-            LoadVideo (){
-                console.log('LoadVideo', LoadVideo);
-            }
         },
-        watch:{
-            'VideoList': function (newVal){
-                let videolist=newVal
+        watch: {
+            'VideoList': function (newVal) {
+                let videolist = newVal
                 //初始化视频方法
-                console.log('newVal', videolist);
                 for (let i = 0; i < videolist.length; i++) {
                     //videolist.map((item, i) => {
-                    console.log('i', i)
                     var timer
-                    clearTimeout(timer);  //清除延迟执行 
+                    clearTimeout(timer);  //清除延迟执行
 
-                    timer = setTimeout(()=>{   //设置延迟执行
+                    timer = setTimeout(() => {   //设置延迟执行
 
-                    let myPlayer = this.$video('myVideo' + i);
+                        let myPlayer = this.$video('myVideo' + i);
 
-                    },1000);
+                    }, 1000);
 
-                }  
+                }
             }
         }
     }
