@@ -71,7 +71,7 @@
         },
         mounted() {
             console.log('Current Swiper instance object', this.swiper)
-            this.getMovies()
+            this.getMoviesasync()
         },
         methods: {
             onchange(index) {
@@ -87,31 +87,86 @@
                 query.type = '黑白'
                 mservice.fetchList(query).then(response => {
                     console.log("response", response)
-                    let filmlist = response;
+                    if (response.result == "0") {
+                        let filmlist = response.data;
+                        for (let i = 0; i < filmlist.length; i++) {
+                            let queryphoto = {};
+                            queryphoto.freetext = filmlist[i].name;
+                            queryphoto.filmuri = filmlist[i].uri;
+                            mservice.fetchPhotoByName(queryphoto).then(response => {
+                                console.log("fetchPhotoByName", response);
+                                let photos = response;
+                                for (let j = 0; j < photos.length; j++) {
+                                    if (photos[j].imgPath != null) {
+                                        let urlitem = {};
+                                        urlitem.filmuri = queryphoto.filmuri;
+                                        urlitem.filmName = queryphoto.freetext;
+                                        urlitem.url = photos[j].imgPath;
+                                        list.push(urlitem);
+                                        break;
+                                    }
+                                }
+                                this.FilePhotoList.splice(0, this.FilePhotoList.length);
+                                this.FilePhotoList = this.FilePhotoList.concat(list);
+                                console.log('this.FilePhotoList', this.FilePhotoList)
+                            })
+                        }
+                    }
+
+                })
+            },
+            getMoviesasync() {
+                let query = {};
+                query.type = '黑白';
+                let that = this;
+                this.GetFilmList(query).then(function (result) {
+                    let filmlist = result;
+                    console.log('filmlist', filmlist);
+                    let photolist = [];
                     for (let i = 0; i < filmlist.length; i++) {
                         let queryphoto = {};
                         queryphoto.freetext = filmlist[i].name;
                         queryphoto.filmuri = filmlist[i].uri;
-                        mservice.fetchPhotoByName(queryphoto).then(response => {
-                            console.log("fetchPhotoByName", response);
-                            let photos = response;
-                            for (let j = 0; j < photos.length; j++) {
-                                if (photos[j].imgPath != null) {
-                                    let urlitem = {};
-                                    urlitem.filmuri = queryphoto.filmuri;
-                                    urlitem.filmName = queryphoto.freetext;
-                                    urlitem.url = photos[j].imgPath;
-                                    list.push(urlitem);
-                                    break;
-                                }
-                            }
-                            this.FilePhotoList.splice(0, this.FilePhotoList.length);
-                            this.FilePhotoList = this.FilePhotoList.concat(list);
-                            console.log('this.FilePhotoList', this.FilePhotoList)
-                        })
-                    }
+                        let queryuri = {};
+                        queryuri.uri = filmlist[i].uri;
 
+                        that.GetPhotoByName(queryphoto).then(function (result) {
+                            if (JSON.stringify(result) != '{}') {
+                                photolist.push(result)
+                            }
+                        });
+
+                    }
+                    that.FilePhotoList = photolist;
+                });
+            },
+            async GetPhotoByName(queryphoto) {
+                let urlitem = {};
+                await mservice.fetchPhotoByName(queryphoto).then(response => {
+                    //console.log("queryphoto", queryphoto);
+                    console.log("fetchPhotoByName", response);
+                    if (response.result == "0") {
+                        let photos = response.data;
+                        for (let j = 0; j < photos.length; j++) {
+                            if (photos[j].imgPath != null) {
+                                urlitem.filmuri = queryphoto.filmuri;
+                                urlitem.filmName = queryphoto.freetext;
+                                urlitem.url = photos[j].imgPath;
+                                urlitem.filmdate = photos[j].date;
+                                break;
+                            }
+                        }
+                    }
+                });
+                return urlitem;
+            },
+            async GetFilmList(query) {
+                let filmlist = [];
+                await mservice.fetchList(query).then(response => {
+                    if (response.result == "0")
+                        filmlist = response.data;
                 })
+                return filmlist;
             },
         }
     };
@@ -119,63 +174,63 @@
 
 <style>
 
-/*<<<<<<< HEAD
-=======*/
-    html, body {
-        /*position: relative;*/
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
+        /*<<<<<<< HEAD
+    =======*/
+        html, body {
+            /*position: relative;*/
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-        background: rgba(173, 166, 166, 0.438);
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color: #000;
-        margin: 0;
-        padding: 0;
-    }
+        body {
+            background: rgba(173, 166, 166, 0.438);
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
 
         /*body div {
-            height: 100%
-        }*/
+                height: 100%
+            }*/
 
-    .swiper-container {
-        width: 85%;
-        height: 80%;
-    }
+        .swiper-container {
+            width: 85%;
+            height: 80%;
+        }
 
-    .swiper-slide {
-        background-position: center;
-        background-size: cover;
-        background-image: url(../../assets/img/MovieBackground.jpg);
-        border-radius: 5px;
-    }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            background-image: url(../../assets/img/MovieBackground.jpg);
+            border-radius: 5px;
+        }
 
-    .slide-image {
-        width: 90%;
-        height: 100%;
-        object-fit: contain;
-    }
+        .slide-image {
+            width: 90%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-    .flexClass {
-        display: flex;
-        align-items: center; /*定义body的元素垂直居中*/
-        justify-content: center; /*定义body的里的元素水平居中*/
-    }
+        .flexClass {
+            display: flex;
+            align-items: center; /*定义body的元素垂直居中*/
+            justify-content: center; /*定义body的里的元素水平居中*/
+        }
 
-    .swiper-button-next {
-        right: -20px;
-    }
+        .swiper-button-next {
+            right: -20px;
+        }
 
-    .swiper-button-prev {
-        left: -20px;
-    }
+        .swiper-button-prev {
+            left: -20px;
+        }
 
-    .swiper-button-prev, .swiper-button-next {
-        color: grey;
-    }
-/*>>>>>>> 6128e8b3dd97baa80217a7fb87e8c504784cd947*/
+        .swiper-button-prev, .swiper-button-next {
+            color: grey;
+        }
+        /*>>>>>>> 6128e8b3dd97baa80217a7fb87e8c504784cd947*/
 </style>
