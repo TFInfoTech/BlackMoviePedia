@@ -1,20 +1,25 @@
 <template>
     <div style="height:100%">
         <div class="main-title">Super Star</div>
-        <el-card shadow="always" :body-style="{ padding: '10px' }" style="margin: 10px;">
-            <el-row>
-                <el-col :span="8">
-                    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" style="width:100%;   object-fit: contain;">
-                </el-col>
-                <el-col :span="16">
-                    <span>好吃的汉堡</span>
-                    <div class="bottom clearfix">
-                        <time class="time">123</time>
-                        <el-button type="text" class="button">操作按钮</el-button>
-                    </div>
-                </el-col>
-            </el-row>
-        </el-card>
+        <div v-if="showCard">
+            <el-card shadow="always" :body-style="{ padding: '10px' }" style="margin: 10px;" v-for="(item,index) in actorinfolistFinal" :key="index">
+                <el-row>
+                    <el-col :span="8">
+                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" style="width:100%;   object-fit: contain;">
+                    </el-col>
+                    <el-col :span="16">
+                        <span v-for="(nameitem,index) in item.nameinfo">
+                            {{nameitem.nametype}}:{{nameitem.namelabel}}
+                            </br>
+                        </span>
+                        <div class="bottom clearfix">
+                            <time class="time">123</time>
+                            <el-button type="text" class="button">操作按钮</el-button>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-card>
+        </div>
         <Footer></Footer>
     </div>
 </template>
@@ -34,7 +39,9 @@
         data() {
             return {
                 actorlist: [],
-                actorinfolist: []
+                actorinfolist: [],
+                actorinfolistFinal: [],
+                showCard: false
             };
         },
         created() {
@@ -47,11 +54,14 @@
         },
         watch: {
             'actorinfolist': function (newVal) {
-                let actorinfolist = newVal
+                let actorinfolist = newVal;
+                let arrlength = actorinfolist.length;
+                let index = 0;
+                let that = this;
                 for (let t = 0; t < actorinfolist.length; t++) {
+                    let nameinfo = [];
                     if (Array.isArray(actorinfolist[t].name)) {
-
-                        let nameinfo = [];
+                        let indexisArray = 0;
                         for (let q = 0; q < actorinfolist[t].name.length; q++) {
                             if (JSON.stringify(actorinfolist[t].name[q]).indexOf("http") != -1) {
                                 let actornameuri = {};
@@ -61,54 +71,92 @@
                                     nameinfoitem.nametype = result.nameType;
                                     nameinfoitem.namelabel = result.label;
                                     nameinfo.push(nameinfoitem);
+
+                                    indexisArray++;
+                                    if (indexisArray == actorinfolist[t].name.length) {
+                                        index++;
+                                    }
+                                    if (index == arrlength) {
+                                        that.actorinfolistFinal = actorinfolist;
+                                    }
                                 });
                             }
                             else if (JSON.stringify(actorinfolist[t].name[q]).indexOf("value") != -1) {
-
                                 let nameinfoitem = {};
                                 nameinfoitem.nametype = actorinfolist[t].name[q]['@language'];
                                 nameinfoitem.namelabel = actorinfolist[t].name[q]['@value'];
                                 nameinfo.push(nameinfoitem);
+                                indexisArray++;
+                                if (indexisArray == actorinfolist[t].name.length) {
+                                    index++;
+                                }
+                                if (index == arrlength) {
+                                    that.actorinfolistFinal = actorinfolist;
+                                }
                             }
                         }
-                        actorinfolist[t].nameinfo = nameinfo;
                     }
                     else {
-                        console.log('不是数组');
+                        //console.log('不是数组',t, actorinfolist[t].name);
                         //不是数组
+                        let actornameuri = {};
+                        actornameuri.uri = actorinfolist[t].name;
+                        this.$common.GetURIDetail(actornameuri).then(function (result) {
+                            let nameinfoitem = {};
+                            nameinfoitem.nametype = result.nameType;
+                            nameinfoitem.namelabel = result.label;
+                            nameinfo.push(nameinfoitem);
+                            index++;
+                            if (index == arrlength) {
+                                that.actorinfolistFinal = actorinfolist;
+                                console.log('actorinfolistaaa', that.actorinfolistFinal)
+                            }
+                        });
                     }
+                    actorinfolist[t].nameinfo = nameinfo;
                 }
-                console.log('actorinfolistaaa', actorinfolist)
+
+            },
+            'actorinfolistFinal': function (newVal) {
+                //actorinfolist = newVal;
+
+                this.showCard = true;
             }
+
         },
         methods: {
             getActorList() {
                 let query = {};
                 query.type = '黑白';
+                let index = 0;
                 let that = this;
                 let list = [];
                 let actorinfolist = [];
+                let actorlistlength = 0;
                 this.$common.GetFilmList(query).then(function (result) {
                     let filmlist = result;
                     for (let i = 0; i < filmlist.length; i++) {
                         list = list.concat(filmlist[i].actorList);
                     }
                     that.actorlist = that.$common.unique(list, 'puri');
+                    actorlistlength = that.actorlist.length;
                     for (let k = 0; k < that.actorlist.length; k++) {
                         let queryactoruri = {};
                         queryactoruri.uri = that.actorlist[k].puri
 
                         that.$common.GetURIDetail(queryactoruri).then(function (result) {
                             actorinfolist.push(result);
+                            index++;
+                            console.log('index', index, actorlistlength)
+                            if (index == actorlistlength) {
+                                that.actorinfolist = actorinfolist
+                            }
                         });
-                    }
-                    that.actorinfolist = actorinfolist
-                    console.log('actorinfolist', that.actorinfolist.length);
 
+                    }
 
                 });
             },
-
             getlist() {
                 let arr = [
                     {
