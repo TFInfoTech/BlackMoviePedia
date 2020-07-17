@@ -17,10 +17,6 @@
                         <span>
                             简介：{{item.briefBiographyitem}}
                         </span></br>
-                        <div class="bottom clearfix">
-                            <time class="time">123</time>
-                            <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
                     </el-col>
                 </el-row>
             </el-card>
