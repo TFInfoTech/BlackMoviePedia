@@ -12,10 +12,11 @@
                             {{nameitem.nametype}}:{{nameitem.namelabel}}
                             </br>
                         </span>
-                        <div class="bottom clearfix">
-                            <time class="time">123</time>
-                            <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
+                        <span>出生日期：{{item.birthday}}</span> </br>
+                        <span>性别：{{item.gender}}</span> </br>
+                        <span>
+                            简介：{{item.briefBiographyitem}}
+                        </span></br>
                     </el-col>
                 </el-row>
             </el-card>
@@ -109,7 +110,7 @@
                             index++;
                             if (index == arrlength) {
                                 that.actorinfolistFinal = actorinfolist;
-                                console.log('actorinfolistaaa', that.actorinfolistFinal)
+                                
                             }
                         });
                     }
@@ -119,7 +120,7 @@
             },
             'actorinfolistFinal': function (newVal) {
                 //actorinfolist = newVal;
-
+                console.log('actorinfolistFinal', newVal)
                 this.showCard = true;
             }
 
@@ -146,6 +147,14 @@
 
                         that.$common.GetURIDetail(queryactoruri).then(function (result) {
                             actorinfolist.push(result);
+                            for (let i = 0; i < actorinfolist.length; i++) {
+                                if (Array.isArray(actorinfolist[i].briefBiography)) {
+                                    actorinfolist[i].briefBiographyitem = actorinfolist[i].briefBiography[0];
+                                }
+                                else {
+                                    actorinfolist[i].briefBiographyitem = actorinfolist[i].briefBiography;
+                                }
+                            }
                             index++;
                             console.log('index', index, actorlistlength)
                             if (index == actorlistlength) {
