@@ -190,7 +190,7 @@
 
 <style>
     .el-card {
-        background-color: transparent;
+        background-color:white;
         height: 200px;
         border-color: darkgray;
     }
