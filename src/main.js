@@ -22,6 +22,7 @@ import common from './common/common'
 
 
 // import style
+import '@/assets/style/site_style.css'
 import 'swiper/css/swiper.css'
 import '@/assets/style/common.css'
 import 'video.js/dist/video-js.css'
