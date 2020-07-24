@@ -10,16 +10,12 @@ import store from "./store/index";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUi from 'element-ui';
-import "@/components/Vant";
+
 // rem
 import "amfe-flexible";
 // 把变量挂载到vue的原型上
 import Video from 'video.js'
 import VideoPlayer from 'vue-video-player'
-import common from './common/common'
-
-
-
 
 // import style
 import '@/assets/style/site_style.css'
@@ -44,7 +40,6 @@ Vue.mixin(mixin);
 
 Vue.config.productionTip = false;
 
-Vue.prototype.$common = common 
 new Vue({
   store,
   router,

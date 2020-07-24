@@ -92,26 +92,27 @@
 </template>
 
 <script>
+import FilmData from "@/data/film";
 export default {
   name: "FilmBrief",
   data() {
     return {
       currentDate: new Date(),
-      emptyUrl: require('../assets/img/MovieBackground.jpg'),
+      emptyUrl: require("../assets/img/MovieBackground.jpg"),
       filmNum: 0,
       filmIndex: 0,
       filmList: [],
-      currentFilm: { url: this.emptyUrl, contributorStr: "" }
+      currentFilm: { url: this.emptyUrl, contributorStr: "" },
     };
   },
   created() {
-    this.getFilms().then(val => {
+    this.getFilms().then((val) => {
       this.filmNum = this.filmList.length;
       if (this.filmNum > 0) {
         this.getFilmDetailOfPhoto(this.filmList[0]);
         this.getFilmDetailOfUri(this.filmList[0]);
       }
-      console.log("currentFilm", this.currentFilm);
+      // console.log("currentFilm", this.currentFilm);
     });
   },
   mounted() {
@@ -123,31 +124,37 @@ export default {
         let query = {};
         query.type = "黑白";
         var that = this;
-        that.$common
-          .GetFilmList(query)
-          .then(function(result) {
-            console.log("filmlist result", result);
+        FilmData.GetFilmList(query)
+          .then(function (result) {
+            // console.log("filmlist result", result);
             that.filmList = result;
             resolve();
           })
-          .catch(error => {
+          .catch((error) => {
             reject(error);
           });
       });
     },
     getFilmDetailOfPhoto(film) {
-      let that = this;
-      // 取照片
-      let queryphoto = {};
-      queryphoto.freetext = film.name;
-      queryphoto.filmuri = film.uri;
+      return new Promise((resolve, reject) => {
+        let that = this;
+        // 取照片
+        let queryphoto = {};
+        queryphoto.freetext = film.name;
+        queryphoto.filmuri = film.uri;
 
-      console.log("queryphoto", queryphoto);
-      that.$common.GetPhotoByName(queryphoto).then(function(result) {
-        if (JSON.stringify(result) === "{}") {
-          result.url = that.emptyUrl;
-        }
-        that.currentFilm = Object.assign(that.currentFilm, result);
+        // console.log("queryphoto", queryphoto);
+        FilmData.GetPhotoByName(queryphoto)
+          .then(function (result) {
+            if (JSON.stringify(result) === "{}") {
+              result.url = that.emptyUrl;
+            }
+            that.currentFilm = Object.assign(that.currentFilm, result);
+            resolve();
+          })
+          .catch((error) => {
+            reject(error);
+          });
       });
     },
     getFilmDetailOfUri(film) {
@@ -158,24 +165,23 @@ export default {
         let queryuri = {};
         queryuri.uri = film.uri;
 
-        that.$common
-          .GetFilmDetailByFilmURI(queryuri)
-          .then(function(detailResult) {
+        FilmData.GetFilmDetailByFilmURI(queryuri)
+          .then(function (detailResult) {
             if (detailResult) {
-              console.log("detailResult", detailResult);
+              // console.log("detailResult", detailResult);
               that.currentFilm = Object.assign(that.currentFilm, detailResult);
             }
             resolve();
-            console.log("that.currentFilm", that.currentFilm);
+            // console.log("that.currentFilm", that.currentFilm);
           })
-          .catch(error => {
+          .catch((error) => {
             reject(error);
           });
       });
     },
     GoToNextFilm() {
-      console.log("filmNum", this.filmNum);
-      console.log("filmIndex", this.filmIndex);
+      // console.log("filmNum", this.filmNum);
+      // console.log("filmIndex", this.filmIndex);
       this.filmIndex++;
       if (this.filmIndex >= 0 && this.filmIndex < this.filmNum) {
         this.ClearCurrentFilm();
@@ -192,19 +198,19 @@ export default {
         filmname: "",
         filmuri: "",
         videouri: "",
-        contributorStr: ""
+        contributorStr: "",
       };
     },
     getMoviesasync() {
       let query = {};
       query.type = "黑白";
       var that = this;
-      that.$common.GetFilmList(query).then(function(result) {
-        console.log("filmlist result", result);
+      FilmData.GetFilmList(query).then(function (result) {
+        // console.log("filmlist result", result);
         that.filmList = result;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
