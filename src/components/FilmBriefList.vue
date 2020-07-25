@@ -28,6 +28,8 @@
                 return new Promise((resolve, reject) => {
                     let query = {};
                     query.type = "黑白";
+                    query.pageth = 1;
+                    query.pageSize = 50;
                     var that = this;
                     FilmData.GetFilmList(query)
                         .then(function (result) {

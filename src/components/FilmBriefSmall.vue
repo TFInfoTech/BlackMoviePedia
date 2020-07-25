@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="videoitem.videouri!=null">
         <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                 <div class="grid-movie-card bg-purple-movie-card" style="height:300px">
