@@ -11,6 +11,7 @@
                   class="slide-image"
                   :data-uri="currentFilm.filmuri"
                   :data-name="currentFilm.filmName"
+                  style="margin-top:3px"
                 />
               </div>
             </el-col>
