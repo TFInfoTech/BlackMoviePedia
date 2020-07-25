@@ -13,7 +13,7 @@ export default { //公开
                     //     videoitem.filmname = videoinfo[0].title;
                     //     videoitem.contributor = '';
                     //     videoitem.date = videoinfo[0].date;
-                    videoitem.contributorStr=''
+                    videoitem.contributorStr = ''
                     for (let k = 0; k < videoitem.contributor.length; k++) {
                         videoitem.contributorStr += videoitem.contributor[k] + '  ';
                     }
@@ -60,5 +60,27 @@ export default { //公开
             res = response.result.data;
         })
         return res;
+    },
+    async GetFilmVideoDetailByFilmURI(queryuri) {
+        let videoitem = {};
+        await mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
+            if (response.result == "0") {
+                if (response.data[0]) {
+                    let videoinfo = response.data[0];
+                    videoitem.filmname = videoinfo.title;
+                    videoitem.contributor = '';
+                    videoitem.date = videoinfo.date;
+                    videoitem.contributorStr = ''
+                    for (let k = 0; k < videoinfo.contributor.length; k++) {
+                        videoitem.contributorStr += videoinfo.contributor[k] + '  ';
+                    }
+                    if (videoinfo.hasOwnProperty("video")) {
+                        videoitem.videouri = videoinfo.video[0].videoPath;
+                        console.log('videoitem', videoitem)
+                    }
+                }
+            }
+        })
+        return videoitem
     }
 }
