@@ -1,6 +1,6 @@
 <template>
     <swiper-slide>     
-        <img src="filmPhotoDetail.url"
+        <img :src="filmPhotoDetail.url"
              class="slide-image"
              :data-uri="filmPhotoDetail.filmuri"
              :data-name="filmPhotoDetail.filmName" />
@@ -26,6 +26,9 @@
         },
         mounted() {
 
+        },
+        watch: {
+       
         },
         methods: {
             getFilmDetailOfPhoto(film) {

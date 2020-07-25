@@ -87,7 +87,6 @@
                     FilmData.GetFilmList(query)
                         .then(function (result) {
                             that.filmList = result;
-                            console.log('that.filmList', that.filmList)
                             resolve();
                         })
                         .catch((error) => {
