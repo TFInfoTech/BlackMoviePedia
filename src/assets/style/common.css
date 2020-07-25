@@ -1,50 +1,79 @@
 ﻿.main-title {
-    width: 100%;
-    height: 80px;
-    font-size: 30px;
-    line-height: 3;
-    font-weight: 800;
-    text-align: center;
-    letter-spacing: 6px;
+  width: 100%;
+  height: 80px;
+  font-size: 30px;
+  line-height: 3;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 6px;
 }
 
 .swiper-container {
-    width: 320px;
-    height: 600px;
-    text-align: center;
+  width: 320px;
+  height: 600px;
+  text-align: center;
 }
 
 .swiper-slide {
-    background-position: center;
-    background-size: cover;
-    background-image: url(../../assets/img/MovieBackground.jpg);
-    border-radius: 10px;
+  background-position: center;
+  background-size: cover;
+  background-image: url(../../assets/img/MovieBackground.jpg);
+  border-radius: 10px;
 }
 
 .slide-image {
-    width: 90%;
-    height: 100%;
-    object-fit: contain;
+  width: 90%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .flexClass {
-    display: flex;
-    align-items: center; /*定义body的元素垂直居中*/
-    justify-content: center; /*定义body的里的元素水平居中*/
+  display: flex;
+  align-items: center; /*定义body的元素垂直居中*/
+  justify-content: center; /*定义body的里的元素水平居中*/
 }
 
 .swiper-button-next {
-    right: -10px;
+  right: -10px;
 }
 
 .swiper-button-prev {
-    left: -10px;
+  left: -10px;
 }
 
-.swiper-button-prev, .swiper-button-next {
-    color: grey;
+.swiper-button-prev,
+.swiper-button-next {
+  color: grey;
 }
 
 .film-title {
-    font-weight: 600;
+  font-weight: 600;
+}
+
+body > .el-container {
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.el-row {
+  margin-bottom: 10px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
 }
