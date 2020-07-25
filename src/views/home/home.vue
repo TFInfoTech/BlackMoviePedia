@@ -71,4 +71,9 @@
 </script>
 
 <style>
+    .el-tabs__item.is-active {
+        color: #409EFF;
+        font-size: x-large;
+        font-weight: 400;
+    }
 </style>
