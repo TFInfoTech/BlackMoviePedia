@@ -43,7 +43,7 @@
                 <FilmBrief></FilmBrief>
               </el-tab-pane>
               <el-tab-pane label="影星" name="3">影星</el-tab-pane>
-              <el-tab-pane label="电影" name="4">电影</el-tab-pane>
+              <el-tab-pane label="电影" name="4"><FilmBriefList></FilmBriefList></el-tab-pane>
             </el-tabs>
           </div>
         </el-col>
