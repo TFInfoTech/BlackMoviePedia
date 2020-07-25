@@ -8,43 +8,30 @@ const router = new Router({
     routes: [
         {
             path: "/",
-            redirect: "/index"
+            redirect: "/home"
         },
         {
-            path: "/index",
-            component: () => import("@/views/index/index"),
+            path: "/home",
+            component: () => import("@/views/home/home"),
             meta: {
-                title: "黑白电影百科",
+                title: "黑白情怀",
                 // 缓存首页
                 keepAlive: true
             }
         },
-        {
-            path: "/index",
-            component: () => import("@/views/movielist/index"),
-            meta: {
-                title: "黑白电影列表",
-                // 缓存首页
-                
-            }
-        },
-     
-        {
-            path: "/index",
-            component: () => import("@/views/detail/index"),
-            meta: {
-                title: "黑白电影详情",
-                // 缓存首页
-
-            }
-        },
-
         {
             path: "/movielist",
             meta: {
                 title: "黑白电影列表"
             },
             component: () => import("@/views/movielist/index")
+        },
+        {
+            path: "/actor",
+            meta: {
+                title: "黑白电影列表"
+            },
+            component: () => import("@/views/actor/index")
         },
         {
             path: "/my",

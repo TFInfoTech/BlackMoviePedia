@@ -17,12 +17,18 @@ export function fetchPhotoByName(query) {
 
 export function fetchFilmDetailByFilmURI(query) {
     return request({
+        url: '/shnh/dydata/webapi/movie/movieDetail',
+        method: 'get',
+        params: query
+    })
+}
+export function fetchURIDetailByURI(query) {
+    return request({
         url: '/data/jsonld',
         method: 'get',
         params: query
     })
 }
-
 export function fetchObject(id) {
     return request({
         url: '/vue-element-admin/article/detail',

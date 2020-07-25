@@ -1,38 +1,24 @@
-﻿body
-{
-}
-
-html, body {
-    /*position: relative;*/
+﻿.main-title {
     width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+    height: 80px;
+    font-size: 30px;
+    line-height: 3;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 6px;
 }
-
-body {
-    background: #fff;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-}
-
-    body div {
-        height: 100%
-    }
 
 .swiper-container {
-    width: 300px;
-    height: 500px;
+    width: 320px;
+    height: 600px;
+    text-align: center;
 }
 
 .swiper-slide {
     background-position: center;
     background-size: cover;
     background-image: url(../../assets/img/MovieBackground.jpg);
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .slide-image {
@@ -57,4 +43,8 @@ body {
 
 .swiper-button-prev, .swiper-button-next {
     color: grey;
+}
+
+.film-title {
+    font-weight: 600;
 }

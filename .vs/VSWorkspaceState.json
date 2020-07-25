@@ -3,14 +3,14 @@
     "",
     "\\src",
     "\\src\\api",
-    "\\src\\assets",
-    "\\src\\router",
+    "\\src\\assets\\img",
+    "\\src\\utils",
     "\\src\\views",
-    "\\src\\views\\cart",
-    "\\src\\views\\detail",
     "\\src\\views\\index",
-    "\\src\\views\\login"
+    "\\src\\views\\movielist",
+    "\\src\\views\\my",
+    "\\src\\views\\order"
   ],
-  "SelectedNode": "\\src\\views\\detail\\index.vue",
+  "SelectedNode": "\\src\\views\\index\\index.vue",
   "PreviewInSolutionExplorer": false
 }
