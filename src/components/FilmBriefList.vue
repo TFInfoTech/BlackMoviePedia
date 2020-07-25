@@ -1,47 +1,40 @@
 <template>
     <div>
-        <FilmBriefSmall v-for="(item,index) in filmList" :key="index" :currentFilm="item" :index="index"></FilmBriefSmall>
+        <div v-if="type==1">
+            <FilmBriefListSwiper :filmList="filmList"></FilmBriefListSwiper>>
+        </div>
+        <div v-if="type==2">
+            <FilmBriefSmall v-for="(item,index) in filmList" :key="index" :currentFilm="item" :index="index"></FilmBriefSmall>
+        </div>
     </div>
 </template>
 
 <script>
+    import slider_item from "@/components/slider_item";
+    import FilmBriefListSwiper from "./FilmBriefListSwiper";
     import FilmBriefSmall from "./FilmBriefSmall";
-    import FilmData from "@/data/film";
     export default {
         name: "FilmBriefList",
         components: {
-            FilmBriefSmall
+            Slideritem: slider_item,
+            FilmBriefListSwiper,
+            Slideritem: slider_item,
+            FilmBriefSmall,
         },
+        props: ['filmList', 'type'],
         data() {
             return {
-                filmList: [],
+
             };
         },
         created() {
-            this.getFilms();
+
         },
         mounted() {
 
         },
         methods: {
-            getFilms() {
-                return new Promise((resolve, reject) => {
-                    let query = {};
-                    query.type = "黑白";
-                    query.pageth = 1;
-                    query.pageSize = 50;
-                    var that = this;
-                    FilmData.GetFilmList(query)
-                        .then(function (result) {
-                            that.filmList = result;
-                            console.log('that.filmList', that.filmList)
-                            resolve();
-                        })
-                        .catch((error) => {
-                            reject(error);
-                        });
-                });
-            },
+
         }
     }
 </script>

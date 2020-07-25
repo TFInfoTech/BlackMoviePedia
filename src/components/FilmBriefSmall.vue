@@ -50,7 +50,8 @@
         props: ['currentFilm', 'index'],
         data() {
             return {
-                videoitem: {},            };
+                videoitem: {},
+            };
         },
         created() {
         },

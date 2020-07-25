@@ -34,8 +34,14 @@
                             <el-tab-pane label="随便" name="1">
                                 <FilmBrief></FilmBrief>
                             </el-tab-pane>
-                            <el-tab-pane label="影星" name="3">影星</el-tab-pane>
-                            <el-tab-pane label="电影" name="4"><FilmBriefList></FilmBriefList></el-tab-pane>
+                            <el-tab-pane label="影星" name="3">
+                            </el-tab-pane>
+                            <el-tab-pane label="视频" name="4">
+                                <FilmBriefList :filmList="filmList" :type="2"></FilmBriefList>
+                            </el-tab-pane>
+                            <el-tab-pane label="电影" name="5">
+                                <FilmBriefList :filmList="filmList" :type="1"></FilmBriefList>
+                            </el-tab-pane>
                         </el-tabs>
                     </div>
                 </el-col>
@@ -51,20 +57,43 @@
     import Footer from "@/components/Footer";
     import FilmBrief from "@/components/FilmBrief";
     import FilmBriefList from "@/components/FilmBriefList";
+    import FilmData from "@/data/film";
     export default {
         components: {
             Footer,
             FilmBrief,
-            FilmBriefList
+            FilmBriefList,
         },
         data() {
             return {
                 activeName: "1",
+                filmList: [],    
             };
+        },
+        created() {
+            this.getFilms();
         },
         methods: {
             handleClick(tab, event) {
                 console.log(tab, event);
+            },
+            getFilms() {
+                return new Promise((resolve, reject) => {
+                    let query = {};
+                    query.type = "黑白";
+                    query.pageth = 1;
+                    query.pageSize = 50;
+                    var that = this;
+                    FilmData.GetFilmList(query)
+                        .then(function (result) {
+                            that.filmList = result;
+                            console.log('that.filmList', that.filmList)
+                            resolve();
+                        })
+                        .catch((error) => {
+                            reject(error);
+                        });
+                });
             },
         },
     };
