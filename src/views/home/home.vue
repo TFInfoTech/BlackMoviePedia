@@ -35,7 +35,7 @@
     <el-main>
       <el-row :gutter="10" >
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <div class="grid-content" style="height:500px">
+          <div class="grid-content" style="height:600px">
             <el-tabs v-model="activeName" @tab-click="handleClick">
               <el-tab-pane label="随便" name="1">
                   <FilmBrief></FilmBrief>

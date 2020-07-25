@@ -2,10 +2,10 @@
   <div>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-        <div class="grid-movie-card bg-purple-movie-card" style="height:400px">
+        <div class="grid-movie-card bg-purple-movie-card" style="height:500px">
           <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-              <div class="grid-content" style="height:200px;text-align:center">
+              <div class="grid-content" style="height:300px;text-align:center">
                 <img
                   :src="currentFilm.url"
                   class="slide-image"
