@@ -5,6 +5,7 @@ import store from "../store/index";
 Vue.use(Router);
 
 const router = new Router({
+    mode: 'hash',
     routes: [
         {
             path: "/",
@@ -32,6 +33,13 @@ const router = new Router({
                 title: "黑白电影列表"
             },
             component: () => import("@/views/actor/index")
+        },
+        {
+            path: "/search",
+            meta: {
+                title: "搜索"
+            },
+            component: () => import("@/views/search/index")
         },
         {
             path: "/my",
