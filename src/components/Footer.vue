@@ -1,31 +1,4 @@
 <template>
-  <!-- <ul class="footer flex jc-sa w100pc fixed bott0 bg-fff aic footer">
-    <li class="item">
-      <router-link to="/index" class="flex2 aic f20 yellow" active-class="active">
-        <i class="icon-home iconfont f18 text"></i>
-        <p class="mt-5 f12 text">首页</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="/movielist" class="flex2 aic f20 text" active-class="active">
-        <van-icon class="text" name=""></van-icon>
-        <i class="el-icon-video-camera"></i>
-        <p class="mt-5 text f12">影片</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="/actor" class="flex2 aic f20 text" active-class="active">
-        <van-icon class="text" name="user-o"></van-icon>
-        <p class="mt-5 text f12">演员</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="/demo" class="flex2 aic f20 text" active-class="active">
-        <van-icon class="text" name="user-o"></van-icon>
-        <p class="mt-5 text f12">例子</p>
-      </router-link>
-    </li>
-  </ul>-->
   <el-row :gutter="10" class="footer">
     <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
       <div class="grid-content footer-menu-item">

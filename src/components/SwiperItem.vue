@@ -4,6 +4,8 @@
              class="slide-image"
              :data-uri="filmPhotoDetail.filmuri"
              :data-name="filmPhotoDetail.filmName" />
+        <!-- <img :src="emptyUrl" 
+             class="slide-image"/>              -->
     </swiper-slide>
 </template>
 
@@ -17,12 +19,13 @@
         },
         data() {
             return {
-                filmPhotoDetail: {},
+                filmPhotoDetail: {url: this.emptyUrl},
                 emptyUrl: require("../assets/img/MovieBackground.jpg"),
             };
         },
         created() {
             this.getFilmDetailOfPhoto(this.filmitem);
+            // console.log ('created slide item',this.filmitem);
         },
         mounted() {
 
@@ -34,7 +37,7 @@
             getFilmDetailOfPhoto(film) {
                 return new Promise((resolve, reject) => {
                     let that = this;
-                    // ȡ��Ƭ
+                    // ȡ��Ƭ
                     let queryphoto = {};
                     queryphoto.freetext = film.name;
                     queryphoto.filmuri = film.uri;
@@ -43,6 +46,7 @@
                             if (JSON.stringify(result) === "{}") {
                                 result.url = that.emptyUrl;
                             }
+                            // console.log ('result',result);
                             that.filmPhotoDetail = result;
                             resolve();
                         })
