@@ -56,8 +56,6 @@
         },
         mounted() {
             this.getVideoDetail(this.currentFilm, this.index);
-            this.getFilmDetailOfPhoto(this.currentFilm);
-            this.getFilmDetailOfUri(this.currentFilm);
         },
         watch: {
             'videoitem': function () {
