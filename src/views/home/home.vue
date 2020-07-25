@@ -40,7 +40,6 @@
               <el-tab-pane label="随便" name="1">
                   <FilmBrief></FilmBrief>
               </el-tab-pane>
-              <el-tab-pane label="推荐" name="2">推荐</el-tab-pane>
               <el-tab-pane label="影星" name="3">影星</el-tab-pane>
               <el-tab-pane label="电影" name="4">电影</el-tab-pane>
             </el-tabs>
