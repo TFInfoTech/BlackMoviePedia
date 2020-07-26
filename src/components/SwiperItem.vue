@@ -6,8 +6,6 @@
       :data-uri="filmPhotoDetail.filmuri"
       :data-name="filmPhotoDetail.filmName"
     />
-    <!-- <img :src="emptyUrl" 
-    class="slide-image"/>-->
   </swiper-slide>
 </template>
 
@@ -28,7 +26,7 @@ export default {
     FilmData.GetFilmDetailOfPhoto(this.filmitem).then(
       (data) => {
         this.filmPhotoDetail = Object.assign(this.filmPhotoDetail, data);
-        console.log("this.filmPhotoDetail", this.filmPhotoDetail);
+        // console.log("this.filmPhotoDetail", this.filmPhotoDetail);
       },
       (err) => {}
     );
