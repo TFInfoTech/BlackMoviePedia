@@ -76,11 +76,55 @@ export default { //公开
                     }
                     if (videoinfo.hasOwnProperty("video")) {
                         videoitem.videouri = videoinfo.video[0].videoPath;
-                      
+
                     }
                 }
             }
         })
         return videoitem
-    }
+    },
+    GetFilmDetailOfPhoto(film) {
+        return new Promise((resolve, reject) => {
+            let that = this;
+            // 取照片
+            let queryphoto = {};
+            queryphoto.freetext = film.name;
+            queryphoto.filmuri = film.uri;
+
+            // console.log("queryphoto", queryphoto);
+            this.GetPhotoByName(queryphoto)
+                .then(function (result) {
+                    if (JSON.stringify(result) === "{}") {
+                        result.url = require("../assets/img/MovieBackground.jpg");
+                    }
+                    // that.currentFilm = Object.assign(that.currentFilm, result);
+                    resolve(result);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
+    GetFilmDetailOfUri(film) {
+        return new Promise((resolve, reject) => {
+            let that = this;
+
+            // 取其他详细信息
+            let queryuri = {};
+            queryuri.uri = film.uri;
+
+            this.GetFilmDetailByFilmURI(queryuri)
+                .then(function (detailResult) {
+                    // if (detailResult) {
+                    //     // console.log("detailResult", detailResult);
+                    //     that.currentFilm = Object.assign(that.currentFilm, detailResult);
+                    // }
+                    resolve(detailResult);
+                    // console.log("that.currentFilm", that.currentFilm);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
 }

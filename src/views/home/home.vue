@@ -40,7 +40,7 @@
           <div class="grid-content" style="height:600px">
             <el-tabs v-model="activeName" @tab-click="handleClick">
               <el-tab-pane label="随便" name="1">
-                <FilmBrief></FilmBrief>
+                <FilmBrief :filmList="filmList"></FilmBrief>
               </el-tab-pane>
               <el-tab-pane label="影星" name="3"></el-tab-pane>
               <!-- <el-tab-pane label="视频" name="4">
@@ -85,9 +85,40 @@ export default {
     };
   },
   created() {
+    this.read(1)
+      .then(
+        (data) => {
+          console.log(data);
+        },
+        (err) => {
+          console.log(err); //小于4
+          return this.read(5); //将状态改为了失败
+        }
+      )
+      .then(
+        (data) => {
+          console.log("data", data);
+        },
+        (err) => {
+          console.log(err); //小于4
+        }
+      );
+
     this.getFilms();
   },
   methods: {
+    read(content) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          if (content > 4) {
+            content ++;
+            resolve(content);
+          } else {
+            reject("小于4");
+          }
+        }, 1000);
+      });
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
@@ -96,7 +127,7 @@ export default {
         let query = {};
         query.type = "黑白";
         query.pageth = 1;
-        query.pageSize = 50;
+        query.pageSize = 10;
         var that = this;
         FilmData.GetFilmList(query)
           .then(function (result) {

@@ -96,98 +96,45 @@
 import FilmData from "@/data/film";
 export default {
   name: "FilmBrief",
+  props: ["filmList"],
   data() {
     return {
       currentDate: new Date(),
       emptyUrl: require("../assets/img/MovieBackground.jpg"),
       filmNum: 0,
       filmIndex: 0,
-      filmList: [],
       currentFilm: { url: this.emptyUrl, contributorStr: "" },
     };
   },
   created() {
-    this.getFilms().then((val) => {
-      this.filmNum = this.filmList.length;
-      if (this.filmNum > 0) {
-        this.getFilmDetailOfPhoto(this.filmList[0]);
-        this.getFilmDetailOfUri(this.filmList[0]);
-      }
-      // console.log("currentFilm", this.currentFilm);
-    });
+
   },
   mounted() {
     //this.GETA();
   },
+  watch: {
+    filmList() {
+      // console.log("this.filmList", this.filmList);
+      if (this.filmList) {
+        this.filmNum = this.filmList.length;
+        if (this.filmNum > 0) {
+          // this.getFilmDetailOfPhoto(this.filmList[0]);
+          // console.log("currentFilm", this.currentFilm);
+          this.GetFilmInfo(this.filmList[0]);
+        }
+      }
+    },
+  },
   methods: {
-    getFilms() {
-      return new Promise((resolve, reject) => {
-        let query = {};
-        query.type = "黑白";
-        var that = this;
-        FilmData.GetFilmList(query)
-          .then(function (result) {
-            // console.log("filmlist result", result);
-            that.filmList = result;
-            resolve();
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    getFilmDetailOfPhoto(film) {
-      return new Promise((resolve, reject) => {
-        let that = this;
-        // 取照片
-        let queryphoto = {};
-        queryphoto.freetext = film.name;
-        queryphoto.filmuri = film.uri;
-
-        // console.log("queryphoto", queryphoto);
-        FilmData.GetPhotoByName(queryphoto)
-          .then(function (result) {
-            if (JSON.stringify(result) === "{}") {
-              result.url = that.emptyUrl;
-            }
-            that.currentFilm = Object.assign(that.currentFilm, result);
-            resolve();
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    getFilmDetailOfUri(film) {
-      return new Promise((resolve, reject) => {
-        let that = this;
-
-        // 取其他详细信息
-        let queryuri = {};
-        queryuri.uri = film.uri;
-
-        FilmData.GetFilmDetailByFilmURI(queryuri)
-          .then(function (detailResult) {
-            if (detailResult) {
-              // console.log("detailResult", detailResult);
-              that.currentFilm = Object.assign(that.currentFilm, detailResult);
-            }
-            resolve();
-            // console.log("that.currentFilm", that.currentFilm);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
     GoToNextFilm() {
       // console.log("filmNum", this.filmNum);
       // console.log("filmIndex", this.filmIndex);
       this.filmIndex++;
       if (this.filmIndex >= 0 && this.filmIndex < this.filmNum) {
         this.ClearCurrentFilm();
-        this.getFilmDetailOfPhoto(this.filmList[this.filmIndex]);
-        this.getFilmDetailOfUri(this.filmList[this.filmIndex]);
+        // this.getFilmDetailOfPhoto(this.filmList[this.filmIndex]);
+        // this.getFilmDetailOfUri(this.filmList[this.filmIndex]);
+        this.GetFilmInfo(this.filmList[this.filmIndex]);
       }
     },
     ClearCurrentFilm() {
@@ -202,15 +149,20 @@ export default {
         contributorStr: "",
       };
     },
-    getMoviesasync() {
-      let query = {};
-      query.type = "黑白";
-      var that = this;
-      FilmData.GetFilmList(query).then(function (result) {
-        // console.log("filmlist result", result);
-        that.filmList = result;
-      });
-    },
+    GetFilmInfo(filmObj) {
+      FilmData.GetFilmDetailOfPhoto(filmObj).then(
+        (data) => {
+          this.currentFilm = Object.assign(this.currentFilm, data);
+        },
+        (err) => {}
+      );
+      FilmData.GetFilmDetailOfUri(filmObj).then(
+        (data) => {
+          this.currentFilm = Object.assign(this.currentFilm, data);
+        },
+        (err) => {}
+      );
+    }
   },
 };
 </script>
