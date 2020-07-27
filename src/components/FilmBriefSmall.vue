@@ -9,7 +9,7 @@
                         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                             <div class="grid-content" style="height:200px;text-align:center">
                                 <video :id="'myVideo'+videoitem.index" data-setup='{}'
-                                       class="video-js">
+                                       class="video-js" name="videoname">
                                     <source :src="videoitem.videouri" type="application/x-mpegURL">
                                 </video>
                             </div>
