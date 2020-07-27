@@ -91,7 +91,6 @@
 
                     let itemList = document.getElementsByClassName('vjs-tech')  // 一行所有元素
                     for (let i = 0; i < itemList.length; i++) { // 寻找当前元素
-                        console.log('a111111', itemList[i]);
                         itemList[i].pause();
                     }
                     
