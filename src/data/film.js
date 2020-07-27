@@ -27,12 +27,13 @@ export default { //公开
         return videoitem
     },
     async GetPhotoByName(queryphoto) {
-        let urlitem = {};
+        var urlitem = {};
         await mservice.fetchPhotoByName(queryphoto).then(response => {
             // console.log("fetchPhotoByName", queryphoto);
             // console.log("fetchPhotoByName", response);
             if (response.result == "0") {
                 let photos = response.data;
+                // console.log("photos",queryphoto.freetext,queryphoto.uri, response);
                 for (let j = 0; j < photos.length; j++) {
                     if (photos[j].imgPath != null) {
                         urlitem.filmuri = queryphoto.filmuri;
@@ -44,6 +45,7 @@ export default { //公开
                 }
             }
         });
+        // console.log("urlitem", urlitem.filmName, urlitem.url);
         return urlitem;
     },
     async GetFilmList(query) {
@@ -91,12 +93,13 @@ export default { //公开
             queryphoto.freetext = film.name;
             queryphoto.filmuri = film.uri;
 
-            // console.log("queryphoto", queryphoto);
+            // console.log("queryphoto", film.name,film.uri);
             this.GetPhotoByName(queryphoto)
                 .then(function (result) {
                     if (JSON.stringify(result) === "{}") {
                         result.url = require("../assets/img/MovieBackground.jpg");
                     }
+                    // console.log("result", result.filmName, result.url);
                     // that.currentFilm = Object.assign(that.currentFilm, result);
                     resolve(result);
                 })

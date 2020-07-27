@@ -11,12 +11,12 @@
     font-weight: normal;
     line-height: 18px;
     font-size: 16px;
-    overflow: hidden;
-    height: 100%;
+    /* overflow: hidden;
+    height: 100%; */
   }
   body {
     font-size: 12px;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min-resolution: 2dppx) {
     body {

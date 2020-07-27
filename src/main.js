@@ -27,6 +27,8 @@ require('vue-video-player/src/custom-theme.css')
 
 //const hls = require("videojs-contrib-hls")
 import hls from 'videojs-contrib-hls'
+import  "babel-polyfill"
+import 'es6-promise/auto'
 
 Vue.use(VideoPlayer)
 Vue.use(hls)
@@ -44,7 +46,7 @@ new Vue({
   store,
   router,
   render: h => h(App),
-  components:{
-    App  //在 index.html页面不使用这个组件，就会返回 We're sorry but demo3 doesn't work properly without JavaScript enabled. Please enable it to continue.
-   }
+  // components:{
+  //   Video  //在 index.html页面不使用这个组件，就会返回 We're sorry but demo3 doesn't work properly without JavaScript enabled. Please enable it to continue.
+  //  }
 }).$mount("#app");

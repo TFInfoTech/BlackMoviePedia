@@ -17,37 +17,47 @@
       </el-row>
     </el-header>
     <el-main>
-      <el-row :gutter="10" type="flex" align="middle">
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <div class="grid-content">
-            <span
-              class="--mb--rich-text"
-              style="font-family:PingFangSC; font-weight:700; font-size:18px; color:rgb(16, 16, 16); font-style:normal; letter-spacing:0px; line-height:25px; text-decoration:none;"
-              data-boldtype="0"
-            >推荐你看</span>
-          </div>
-        </el-col>
-      </el-row>
       <el-row :gutter="10" type="flex" align="middle" v-if="filmList.length===0">
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <div class="grid-content">
-            <el-tag
-              class="quick-tag"
-              @close="handleCloseTag(tag)"
-              v-for="tag in searchTags"
-              :key="tag"
-              closable
-              type
-              @click="pasteInput (tag)"
-            >{{tag}}</el-tag>
-          </div>
+          <el-row :gutter="10" type="flex" align="middle">
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+              <div class="grid-content">
+                <span
+                  class="--mb--rich-text"
+                  style="font-family:PingFangSC; font-weight:700; font-size:18px; color:rgb(16, 16, 16); font-style:normal; letter-spacing:0px; line-height:25px; text-decoration:none;"
+                  data-boldtype="0"
+                >推荐你看</span>
+              </div>
+            </el-col>
+          </el-row>
+          <el-row :gutter="10" type="flex" align="middle">
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+              <div class="grid-content">
+                <el-tag
+                  class="quick-tag"
+                  @close="handleCloseTag(tag)"
+                  v-for="tag in searchTags"
+                  :key="tag"
+                  closable
+                  type
+                  @click="pasteInput (tag)"
+                >{{tag}}</el-tag>
+              </div>
+            </el-col>
+          </el-row>
         </el-col>
       </el-row>
       <el-row :gutter="10" type="flex" align="middle" v-if="hasNoResult">
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <div class="grid-content" style="text-align:center;font-weight:600;color:rgba(123, 123, 123, 1)">
-            啥也没找着，找找别的试试
-          </div>
+          <div
+            class="grid-content"
+            style="text-align:center;font-weight:600;color:rgba(123, 123, 123, 1)"
+          >啥也没找着，找找别的试试</div>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10" type="flex" align="middle" v-if="!hasNoResult">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <SearchList :waterfallData="filmList"></SearchList>
         </el-col>
       </el-row>
     </el-main>
@@ -59,11 +69,13 @@
 
 <script>
 import Footer from "@/components/Footer";
+import SearchList from "@/components/SearchList";
 import FilmData from "@/data/film";
 
 export default {
   components: {
     Footer,
+    SearchList,
   },
   data() {
     return {
@@ -76,19 +88,25 @@ export default {
         //   name: "田七郎",
         //   uri: "http://data.library.sh.cn/dy/resource/movie/3w67jnfaot1csjxa",
         // },
+        // {
+        //   abbreviateName: "",
+        //   date: "1927",
+        //   name: "田七郎",
+        //   uri: "http://data.library.sh.cn/dy/resource/movie/3w67jnfaot1csjxa",
+        // },
       ],
-      searched: false
+      searched: false,
     };
   },
   computed: {
-    hasNoResult (){
+    hasNoResult() {
       // console.log ('check hasNoResult')
-      if (this.searched && this.filmList.length===0){
+      if (this.searched && this.filmList.length === 0) {
         return true;
       } else {
         return false;
       }
-    }
+    },
   },
   methods: {
     back() {
@@ -111,10 +129,10 @@ export default {
         FilmData.GetFilmList(query)
           .then(function (result) {
             that.$nextTick(() => {
-              // that.filmList = Object.assign({},that.filmList, result);
+              // that.filmList = Object.assign({}, that.filmList, result);
               that.filmList = result;
               that.searched = true;
-              // console.log("that.filmList", that.filmList);
+              console.log("that.filmList", that.filmList);
             });
             resolve();
           })
