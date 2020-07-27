@@ -2,11 +2,11 @@
     <div v-if="videoitem.videouri!=null">
         <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                <div class="grid-movie-card bg-purple-movie-card" style="height:300px">
+                <div class="grid-movie-card bg-purple-movie-card" style="height:350px">
                     <el-row :gutter="10">
                         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                            <div class="grid-content" style="height:150px;text-align:center">
-                                <video :id="'myVideo'+videoitem.index" controls=true autoplay="muted" preload="auto" width="400px" height="200px" data-setup='{}'
+                            <div class="grid-content" style="height:200px;text-align:center">
+                                <video :id="'myVideo'+videoitem.index" data-setup='{}'
                                        class="video-js">
                                     <source :src="videoitem.videouri" type="application/x-mpegURL">
                                 </video>
@@ -57,6 +57,12 @@
         },
         mounted() {
             this.getVideoDetail(this.currentFilm, this.index);
+            this.chartId = this.chartId + this.chartIndex + Math.floor(Math.random() * 1000)
+            this.boxId = this.chartId + '-box'
+            this.$nextTick(() => {
+                this.scroll()
+                window.addEventListener('scroll', this.scroll)
+            })
         },
         watch: {
             'videoitem': function () {
@@ -71,7 +77,11 @@
                 timer = setTimeout(() => {   //设置延迟执行
 
                     let myPlayer = this.$video('myVideo' + videoitem.index, {
-                        autoplay: false
+                        autoplay: false,
+                        preload: "auto",
+                        width: "400px",
+                        height: "200px",
+                        controls: true
                     });
 
                 }, 1000);
