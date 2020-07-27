@@ -110,7 +110,7 @@
                             index++;
                             if (index == arrlength) {
                                 that.actorinfolistFinal = actorinfolist;
-                                
+
                             }
                         });
                     }
@@ -192,6 +192,89 @@
                 this.$common.GetURIDetail(q).then(function (result) {
                     console.log('resultresultresultresult', result);
                 });
+            },
+            getActorListNew() {
+                let query = {};
+                query.type = '黑白';
+                let that = this;
+                let list = [];
+                this.$common.GetFilmList(query).then(function (result) {
+                    let filmlist = result;
+                    for (let i = 0; i < filmlist.length; i++) {
+                        list = list.concat(filmlist[i].actorList);
+                    }
+                    that.actorlist = that.$common.unique(list, 'puri');
+                })
+            },
+            getActorDetailByUri(ActorUri) {
+                let queryactoruri = {};
+                queryactoruri.uri = ActorUri;
+
+                this.$common.GetURIDetail(queryactoruri).then(function (result) {
+                    let actorDetail = result;
+                    //取简介
+                    if (Array.isArray(actorDetail.briefBiography)) {
+                        actorDetail.briefBiographyitem = actorDetail.briefBiography[0];
+                    }
+                    else {
+                        actorDetail.briefBiographyitem = actorDetail.briefBiography;
+                    }   
+                    //取姓名
+                    let nameinfo = [];
+                    if (Array.isArray(actorDetail.name)) {
+                        let indexisArray = 0;
+                        for (let q = 0; q < actorDetail.name.length; q++) {
+                            if (JSON.stringify(actorDetail.name[q]).indexOf("http") != -1) {
+                                let actornameuri = {};
+                                actornameuri.uri = actorDetail.name[q];
+                                this.$common.GetURIDetail(actornameuri).then(function (result) {
+                                    let nameinfoitem = {};
+                                    nameinfoitem.nametype = result.nameType;
+                                    nameinfoitem.namelabel = result.label;
+                                    nameinfo.push(nameinfoitem);
+
+                                    indexisArray++;
+                                    if (indexisArray == actorDetail.name.length) {
+                                        actorDetail.nameinfo = nameinfo;
+                                    }
+                                });
+                            }
+                            else if (JSON.stringify(actorDetail.name[q]).indexOf("value") != -1) {
+                                let nameinfoitem = {};
+                                nameinfoitem.nametype = actorDetail.name[q]['@language'];
+                                nameinfoitem.namelabel = actorDetail.name[q]['@value'];
+                                nameinfo.push(nameinfoitem);
+                                indexisArray++;
+                                if (indexisArray == actorDetail.name.length) {
+                                    actorDetail.nameinfo = nameinfo;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        //console.log('不是数组',t, actorinfolist[t].name);
+                        //不是数组
+                        let actornameuri = {};
+                        actornameuri.uri = actorinfolist[t].name;
+                        this.$common.GetURIDetail(actornameuri).then(function (result) {
+                            let nameinfoitem = {};
+                            nameinfoitem.nametype = result.nameType;
+                            nameinfoitem.namelabel = result.label;
+                            nameinfo.push(nameinfoitem);
+                            actorDetail.nameinfo = nameinfo;
+                        });
+                    }
+                });
+            },
+            getActorNameByActorNameUri(ActorNameUri) {
+                let actornameuri = {};
+                actornameuri.uri = ActorNameUri;
+                this.$common.GetURIDetail(actornameuri).then(function (result) {
+                    let nameinfoitem = {};
+                    nameinfoitem.nametype = result.nameType;
+                    nameinfoitem.namelabel = result.label;
+                    return nameinfoitem;
+                });
             }
         }
     }
@@ -199,7 +282,7 @@
 
 <style>
     .el-card {
-        background-color:white;
+        background-color: white;
         height: 200px;
         border-color: darkgray;
     }
