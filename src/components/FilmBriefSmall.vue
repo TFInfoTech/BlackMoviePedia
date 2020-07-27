@@ -1,5 +1,7 @@
 <template>
     <div v-if="videoitem.videouri!=null">
+
+        <!--<el-button @click="clickbutton">圆角按钮</el-button>-->
         <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                 <div class="grid-movie-card bg-purple-movie-card" style="height:350px">
@@ -51,18 +53,13 @@
         data() {
             return {
                 videoitem: {},
+                //a: {}
             };
         },
         created() {
         },
         mounted() {
             this.getVideoDetail(this.currentFilm, this.index);
-            this.chartId = this.chartId + this.chartIndex + Math.floor(Math.random() * 1000)
-            this.boxId = this.chartId + '-box'
-            this.$nextTick(() => {
-                this.scroll()
-                window.addEventListener('scroll', this.scroll)
-            })
         },
         watch: {
             'videoitem': function () {
@@ -70,8 +67,14 @@
             }
         },
         methods: {
+            //clickbutton() {
+            //    this.a = document.getElementById('myVideo1_html5_api');
+            //    console.log('是否暂停', this.a.paused)
+            //    this.a.pause();
+            //},
             setVideo(videoitem) {
-                var timer
+                var timer;
+
                 clearTimeout(timer);  //清除延迟执行
 
                 timer = setTimeout(() => {   //设置延迟执行

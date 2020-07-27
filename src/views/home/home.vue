@@ -81,7 +81,10 @@
         },
         methods: {
             handleClick(tab, event) {
-                // console.log(tab, event);
+                console.log(tab.name);
+                if (tab.name != '4') {
+
+                }
             },
             getFilms() {
                 return new Promise((resolve, reject) => {
