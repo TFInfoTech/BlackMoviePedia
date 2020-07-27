@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-        <div class="grid-movie-card bg-purple-movie-card" style="height:400px">
+        <div class="grid-movie-card bg-purple-movie-card">
           <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <div class="grid-content" style="height:250px;text-align:center">
@@ -68,7 +68,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-row :gutter="10">
+    <el-row :gutter="10" v-if="filmNum>0 && filmIndex<filmNum">
       <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
         <div class="grid-content bg-transparent"></div>
       </el-col>
@@ -89,6 +89,15 @@
         <div class="grid-content bg-transparent"></div>
       </el-col>
     </el-row>
+    <el-row :gutter="10" v-if="filmNum>0 && filmNum===filmIndex">
+      <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <div class="grid-content bg-transparent" style="text-align: center">
+          <router-link :to="{path:'/search'}">
+            <el-button type="info" round>真挑！自己去搜下想要的吧！</el-button>
+          </router-link>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -106,9 +115,7 @@ export default {
       currentFilm: { url: this.emptyUrl, contributorStr: "" },
     };
   },
-  created() {
-
-  },
+  created() {},
   mounted() {
     //this.GETA();
   },
@@ -162,7 +169,7 @@ export default {
         },
         (err) => {}
       );
-    }
+    },
   },
 };
 </script>

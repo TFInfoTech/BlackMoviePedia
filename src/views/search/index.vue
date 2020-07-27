@@ -10,7 +10,7 @@
         <el-col :xs="22" :sm="22" :md="22" :lg="22" :xl="22">
           <div class="grid-content bg-purple">
             <el-input placeholder="请输入影片名或人名" v-model="searchInput" class="input-with-select">
-              <el-button slot="append" icon="el-icon-search"></el-button>
+              <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
             </el-input>
           </div>
         </el-col>
@@ -28,7 +28,7 @@
           </div>
         </el-col>
       </el-row>
-      <el-row :gutter="10" type="flex" align="middle">
+      <el-row :gutter="10" type="flex" align="middle" v-if="filmList.length===0">
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div class="grid-content">
             <el-tag
@@ -43,6 +43,13 @@
           </div>
         </el-col>
       </el-row>
+      <el-row :gutter="10" type="flex" align="middle" v-if="hasNoResult">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <div class="grid-content" style="text-align:center;font-weight:600;color:rgba(123, 123, 123, 1)">
+            啥也没找着，找找别的试试
+          </div>
+        </el-col>
+      </el-row>
     </el-main>
     <el-footer>
       <Footer></Footer>
@@ -52,6 +59,7 @@
 
 <script>
 import Footer from "@/components/Footer";
+import FilmData from "@/data/film";
 
 export default {
   components: {
@@ -60,8 +68,27 @@ export default {
   data() {
     return {
       searchInput: "",
-      searchTags: ["英雄儿女", "新女性", "天伦", "人生", "渔光曲"],
+      searchTags: ["风云儿女", "新女性", "天伦", "人生", "渔光曲"],
+      filmList: [
+        // {
+        //   abbreviateName: "",
+        //   date: "1927",
+        //   name: "田七郎",
+        //   uri: "http://data.library.sh.cn/dy/resource/movie/3w67jnfaot1csjxa",
+        // },
+      ],
+      searched: false
     };
+  },
+  computed: {
+    hasNoResult (){
+      // console.log ('check hasNoResult')
+      if (this.searched && this.filmList.length===0){
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   methods: {
     back() {
@@ -72,6 +99,29 @@ export default {
     },
     handleCloseTag(tag) {
       this.searchTags.splice(this.searchTags.indexOf(tag), 1);
+    },
+    search() {
+      return new Promise((resolve, reject) => {
+        let query = {};
+        query.type = "黑白";
+        query.name = this.searchInput;
+        query.pageth = 1;
+        query.pageSize = 10;
+        var that = this;
+        FilmData.GetFilmList(query)
+          .then(function (result) {
+            that.$nextTick(() => {
+              // that.filmList = Object.assign({},that.filmList, result);
+              that.filmList = result;
+              that.searched = true;
+              // console.log("that.filmList", that.filmList);
+            });
+            resolve();
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
     },
   },
 };
