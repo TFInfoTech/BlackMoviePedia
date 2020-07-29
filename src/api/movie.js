@@ -8,13 +8,13 @@ export function fetchList(query) {
     })
 }
 export function fetchPhotoByName(query) {
-    var r = request({
+    return request({
         url: '/shnh/dydata/webapi/photo/getPhotoList',
         method: 'get',
         params: query
     })
-    console.log ('getPhotoList',query.freetext,r)
-    return r
+    // console.log ('getPhotoList',query.freetext,r)
+    // return r
 }
 
 export function fetchFilmDetailByFilmURI(query) {

@@ -42,6 +42,13 @@ const router = new Router({
             component: () => import("@/views/search/index")
         },
         {
+            path: "/test",
+            meta: {
+                title: "测试"
+            },
+            component: () => import("@/views/test/index")
+        },
+        {
             path: "/my",
             component: () => import("@/views/my/index"),
             redirect: "/my/center",
