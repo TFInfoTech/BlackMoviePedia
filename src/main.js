@@ -27,8 +27,6 @@ require('vue-video-player/src/custom-theme.css')
 
 //const hls = require("videojs-contrib-hls")
 import hls from 'videojs-contrib-hls'
-import  "babel-polyfill"
-import 'es6-promise/auto'
 
 Vue.use(VideoPlayer)
 Vue.use(hls)
