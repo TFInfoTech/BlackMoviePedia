@@ -11,29 +11,29 @@ import * as mservice from "@/api/movie";
 export default {
   created() {
     for (let i = 0; i < this.filmList.length; i++) {
-      //   clearTimeout(this.timer);
-      //   setTimeout(() => {
-      //     mservice.fetchPhotoByName(this.filmList[i]).then((response) => {
-      //       if (response.result == "0") {
-      //         let photos = response.data;
-      //         // console.log("fetchPhotoByName", response);
-      //         console.log(
-      //           "photos",
-      //           this.filmList[i].freetext,
-      //           photos.uri,
-      //           response
-      //         );
-      //       }
-      //     });
-      //   }, 5000);
-      //   setTimeout(() => {
-      //     console.log("fetchPhotoByName", i);
-      //   }, 2000);
-      (function (e) {
-        setTimeout(function () {
-          console.log("fetchPhotoByName", i);
-        }, 2000 * i);
-      })(i);
+        // clearTimeout(this.timer);
+        setTimeout(() => {
+          mservice.fetchPhotoByName(this.filmList[i]).then((response) => {
+            if (response.result == "0") {
+              let photos = response.data;
+              // console.log("fetchPhotoByName", response);
+              console.log(
+                "photos",
+                this.filmList[i].freetext,
+                photos.uri,
+                response
+              );
+            }
+          });
+        }, 500*i);
+        // setTimeout(() => {
+        //   console.log("fetchPhotoByName", i);
+        // }, 2000);
+    //   (function (e) {
+    //     setTimeout(function () {
+    //       console.log("fetchPhotoByName", i);
+    //     }, 2000 * i);
+    //   })(i);
     }
   },
   data() {

@@ -3,7 +3,7 @@
     <div class="waterfall px-container clearfix" v-cloak>
       <ul class="px-waterfall left" v-for="(el,i) in newWaterfallData" :key="i">
         <li v-for="(item,index) in el" :key="index">
-            <SearchListItem :searchItem="item" itemType="film"></SearchListItem>
+            <SearchListItem :searchItem="item" itemType="film" :itemIndex="i*2+index"></SearchListItem>
           <!-- <div style="position: relative">
             <router-link to="/goodsdetail/1">
               <img :src="emptyUrl" class="card-image" alt v-loading="true" />

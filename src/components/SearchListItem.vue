@@ -11,7 +11,7 @@
 import FilmData from "@/data/film";
 export default {
   name: "SearchItem",
-  props: ["searchItem", "itemType"],
+  props: ["searchItem", "itemType","itemIndex"],
   components: {},
   data() {
     return {
@@ -20,21 +20,26 @@ export default {
   },
   created() {
     // console.log("created");
-    
+
     switch (this.itemType) {
       case "film":
-          var query = {name:this.searchItem.filmname,uri:this.searchItem.filmname}
-        FilmData.GetFilmDetailOfPhoto(this.searchItem).then(
-          (data) => {
-            //   console.log("this.searchItem", this.searchItem);
-            //   console.log("data", data.filmName,data.filmuri,data.url);
-            this.displayItem.imageUrl = data.url;
-            this.displayItem.title = data.filmName;
-            this.displayItem.linkUrl = "";
-            // console.log("this.displayItem", this.displayItem);
-          },
-          (err) => {}
-        );
+        var query = {
+          name: this.searchItem.filmname,
+          uri: this.searchItem.filmname,
+        };
+        setTimeout(() => {
+          FilmData.GetFilmDetailOfPhoto(this.searchItem).then(
+            (data) => {
+                console.log("this.searchItem", this.searchItem);
+                console.log("data", data.filmName,data.filmuri,data.url);
+              this.displayItem.imageUrl = data.url;
+              this.displayItem.title = data.filmName;
+              this.displayItem.linkUrl = "";
+              // console.log("this.displayItem", this.displayItem);
+            },
+            (err) => {}
+          );
+        }, 500 * this.itemIndex);
         break;
     }
   },
