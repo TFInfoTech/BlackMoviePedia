@@ -13,11 +13,20 @@ const router = new Router({
         },
         {
             path: "/home",
-            component: () => import("@/views/home/home"),
+            component: () => import("@/views/actor/actorlist"),
             meta: {
                 title: "黑白情怀",
                 // 缓存首页
                 keepAlive: true
+            }
+        },
+        {
+            path: "/home",
+            component: () => import("@/views/home/home"),
+            meta: {
+                title: "黑白情怀",
+                // 缓存首页
+               // keepAlive: true
             }
         },
         {

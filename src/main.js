@@ -10,6 +10,8 @@ import store from "./store/index";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUi from 'element-ui';
+import Utils from './utils/common.js';
+Vue.prototype.utils = Utils;
 
 // rem
 import "amfe-flexible";

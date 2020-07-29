@@ -130,4 +130,29 @@ export default { //公开
                 });
         });
     },
+    getActorNameByActorNameUri(query) {
+        return new Promise((resolve, reject) => {
+            this.GetURIDetail(query)
+                .then(function (res) {
+                    let nameinfoitem = {};
+                    nameinfoitem.nametype = res.nameType;
+                    nameinfoitem.namelabel = res.label;
+                    resolve(nameinfoitem);                   
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    },
+    getActorPhotoByActorname(query) {
+        return new Promise((resolve, reject) => {
+            this.GetPhotoByName(query)
+                .then(function (res) {
+                    resolve(res);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
 }
