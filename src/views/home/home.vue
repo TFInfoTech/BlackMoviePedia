@@ -84,16 +84,13 @@
         },
         methods: {
             handleClick(tab, event) {
-                console.log(tab.name);
                 if (tab.name != '4') {
                     //_html5_api
                     //let b = document.getElementById('myVideo1');
-
                     let itemList = document.getElementsByClassName('vjs-tech')  // 一行所有元素
                     for (let i = 0; i < itemList.length; i++) { // 寻找当前元素
                         itemList[i].pause();
-                    }
-                    
+                    }                    
                 }
             },
             getFilms() {

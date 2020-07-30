@@ -62,9 +62,7 @@
             this.getVideoDetail(this.currentFilm, this.index);
         },
         watch: {
-            'videoitem': function () {
-                this.setVideo(this.videoitem);
-            }
+           
         },
         methods: {
             //clickbutton() {
@@ -99,7 +97,7 @@
                         .then(function (result) {
                             that.videoitem = result;
                             that.videoitem.index = index;
-
+                            that.setVideo(that.videoitem);
                             resolve();
                         })
                         .catch((error) => {
