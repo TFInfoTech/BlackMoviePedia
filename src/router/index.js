@@ -11,15 +11,15 @@ const router = new Router({
             path: "/",
             redirect: "/home"
         },
-        {
-            path: "/home",
-            component: () => import("@/views/actor/actorlist"),
-            meta: {
-                title: "黑白情怀",
-                // 缓存首页
-                keepAlive: true
-            }
-        },
+        // {
+        //     path: "/home",
+        //     component: () => import("@/views/actor/actorlist"),
+        //     meta: {
+        //         title: "黑白情怀",
+        //         // 缓存首页
+        //         keepAlive: true
+        //     }
+        // },
         {
             path: "/home",
             component: () => import("@/views/home/home"),
@@ -49,6 +49,14 @@ const router = new Router({
                 title: "搜索"
             },
             component: () => import("@/views/search/index")
+        },
+        {
+            name: "movie",
+            path: "/movie/:name/:uri",
+            meta: {
+                title: "影片"
+            },
+            component: () => import("@/views/movie/index")
         },
         {
             path: "/test",

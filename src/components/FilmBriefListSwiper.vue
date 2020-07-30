@@ -1,7 +1,7 @@
 <template>
   <div>
     <swiper ref="mySwiper" :options="swiperOptions">
-      <SwiperItem v-for="(item,index) in filmList" :key="index" :filmitem="item"></SwiperItem>
+      <SwiperItem v-for="(item,index) in filmList" :key="index" :filmitem="item" :itemIndex="index"></SwiperItem>
       <!-- <swiper-slide v-for="(item,index) in filmList" :key="index">
         <img
           :src="emptyUrl"

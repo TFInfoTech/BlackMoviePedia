@@ -35,9 +35,9 @@
                                 <FilmBrief :filmList="filmList"></FilmBrief>
                             </el-tab-pane>
                             <el-tab-pane label="影星" name="3"></el-tab-pane>
-                            <el-tab-pane label="视频" name="4">
+                            <!-- <el-tab-pane label="视频" name="4">
                                 <FilmBriefList :filmList="filmList" :type="2"></FilmBriefList>
-                            </el-tab-pane>
+                            </el-tab-pane> -->
                             <el-tab-pane label="电影" name="5">
                                 <FilmBriefList :filmList="filmList" :type="1"></FilmBriefList>
                             </el-tab-pane>
@@ -84,7 +84,7 @@
         },
         methods: {
             handleClick(tab, event) {
-                console.log(tab.name);
+                // console.log(tab.name);
                 if (tab.name != '4') {
                     //_html5_api
                     //let b = document.getElementById('myVideo1');

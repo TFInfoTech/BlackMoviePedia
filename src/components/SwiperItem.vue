@@ -1,10 +1,10 @@
 <template>
   <swiper-slide>
     <img
-      :src="filmPhotoDetail.url"
+      :src="filmPhotoDetail.imgPath"
       class="slide-image"
-      :data-uri="filmPhotoDetail.filmuri"
-      :data-name="filmPhotoDetail.filmName"
+      :data-uri="filmPhotoDetail.uri"
+      :data-name="filmPhotoDetail.name"
     />
   </swiper-slide>
 </template>
@@ -13,23 +13,27 @@
 import FilmData from "@/data/film";
 export default {
   name: "SwiperItem",
-  props: ["filmitem"],
+  props: ["filmitem", "itemIndex"],
   components: {},
   data() {
     return {
-      filmPhotoDetail: { url: "", filmuri: "", filmName: "" },
+      filmPhotoDetail: { imgPath: "", filmuri: "", filmName: "" },
     };
   },
   created() {
     // FilmData.GetFilmDetailOfPhoto(this.filmitem);
     // console.log ('created slide item',this.filmitem);
-    FilmData.GetFilmDetailOfPhoto(this.filmitem).then(
-      (data) => {
-        this.filmPhotoDetail = Object.assign(this.filmPhotoDetail, data);
-        // console.log("this.filmPhotoDetail", this.filmPhotoDetail);
-      },
-      (err) => {}
-    );
+    setTimeout(() => {
+      FilmData.GetFilmDetailOfPhoto(this.filmitem).then(
+        (data) => {
+          if (data && data.length > 0) {
+            this.filmPhotoDetail = Object.assign(this.filmPhotoDetail, data[0]);
+          }
+          // console.log("this.filmPhotoDetail", this.filmPhotoDetail);
+        },
+        (err) => {}
+      );
+    }, 500 * this.itemIndex);
   },
   mounted() {},
   watch: {},

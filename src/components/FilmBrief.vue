@@ -6,13 +6,15 @@
           <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
               <div class="grid-content" style="height:250px;text-align:center">
+                <router-link :to="{ name:'movie',params:{'name':currentFilm.name,'uri':currentFilm.movie} }">
                 <img
-                  :src="currentFilm.url"
+                  :src="currentFilm.imgPath"
                   class="slide-image"
-                  :data-uri="currentFilm.filmuri"
-                  :data-name="currentFilm.filmName"
+                  :data-uri="currentFilm.uri"
+                  :data-name="currentFilm.name"
                   style="margin-top:3px"
                 />
+                </router-link>
               </div>
             </el-col>
           </el-row>
@@ -23,7 +25,7 @@
                   class="--mb--rich-text"
                   style="margin-left:5px;font-family:PingFangSC; font-weight:700; font-size:24px; color:rgba(123, 123, 123, 1); font-style:normal; letter-spacing:0px; line-height:33px; text-decoration:none;"
                   data-boldtype="0"
-                >{{currentFilm.filmName===""?(currentFilm.filmname===""?currentFilm.name===""?"":currentFilm.name:currentFilm.filmname):currentFilm.filmName}} - {{ currentFilm.filmdate===""?currentFilm.date===""?"":currentFilm.date:currentFilm.filmdate }}</span>
+                >{{currentFilm.name}} - {{ currentFilm.date }}</span>
               </div>
             </el-col>
           </el-row>
@@ -112,7 +114,7 @@ export default {
       emptyUrl: require("../assets/img/MovieBackground.jpg"),
       filmNum: 0,
       filmIndex: 0,
-      currentFilm: { url: this.emptyUrl, contributorStr: "" },
+      currentFilm: { imgPath: this.emptyUrl, contributorStr: "",name:"",date:'' },
     };
   },
   created() {},
@@ -159,13 +161,20 @@ export default {
     GetFilmInfo(filmObj) {
       FilmData.GetFilmDetailOfPhoto(filmObj).then(
         (data) => {
-          this.currentFilm = Object.assign(this.currentFilm, data);
+          if (data && data.length > 0) {
+            // console.log ('filmObj', filmObj)
+            // console.log("data[0]", data[0]);
+            this.currentFilm = Object.assign(this.currentFilm, data[0]);
+            // console.log("currentFilm", this.currentFilm);
+          }
         },
         (err) => {}
       );
       FilmData.GetFilmDetailOfUri(filmObj).then(
         (data) => {
+          // console.log ('filmObj', filmObj)
           this.currentFilm = Object.assign(this.currentFilm, data);
+          // console.log ('currentFilm', this.currentFilm)
         },
         (err) => {}
       );

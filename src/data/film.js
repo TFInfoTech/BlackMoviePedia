@@ -2,6 +2,7 @@ import * as mservice from '@/api/movie';
 export default { //公开
     async GetFilmDetailByFilmURI(queryuri) {
         let videoitem = {};
+        // console.log('queryuri', queryuri)
         await mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
             // console.log('fetchFilmDetailByFilmURI', response)
             if (response.result == "0") {
@@ -26,27 +27,33 @@ export default { //公开
         })
         return videoitem
     },
-    async GetPhotoByName(queryphoto) {
-        var urlitem = {};
-        await mservice.fetchPhotoByName(queryphoto).then(response => {
-            // console.log("fetchPhotoByName", queryphoto);
-            // console.log("fetchPhotoByName", response);
-            if (response.result == "0") {
-                let photos = response.data;
-                // console.log("photos",queryphoto.freetext,queryphoto.uri, response);
-                for (let j = 0; j < photos.length; j++) {
-                    if (photos[j].imgPath != null) {
-                        urlitem.filmuri = queryphoto.filmuri;
-                        urlitem.filmName = queryphoto.freetext;
-                        urlitem.url = photos[j].imgPath;
-                        urlitem.filmdate = photos[j].date;
-                        break;
-                    }
+    GetPhotoByName(queryphoto) {
+        var urlitem = [];
+        return new Promise((resolve, reject) => {
+
+            mservice.fetchPhotoByName(queryphoto).then(response => {
+                // console.log("fetchPhotoByName", queryphoto);
+                // console.log("fetchPhotoByName", response);
+                if (response.result == "0") {
+                    urlitem = response.data;
+                    // console.log("photos",queryphoto.freetext,queryphoto.uri, response);
+                    // for (let j = 0; j < photos.length; j++) {
+                    //     if (photos[j].imgPath != null) {
+                    //         urlitem.filmuri = queryphoto.filmuri;
+                    //         urlitem.filmName = queryphoto.freetext;
+                    //         urlitem.url = photos[j].imgPath;
+                    //         urlitem.filmdate = photos[j].date;
+                    //         break;
+                    //     }
+                    // }
                 }
-            }
+                resolve(urlitem);
+            })
+                .catch((error) => {
+                    reject(error);
+                });
         });
         // console.log("urlitem", urlitem.filmName, urlitem.url);
-        return urlitem;
     },
     async GetFilmList(query) {
         let filmlist = [];
@@ -115,7 +122,7 @@ export default { //公开
             // 取其他详细信息
             let queryuri = {};
             queryuri.uri = film.uri;
-
+            // console.log("queryuri", queryuri);
             this.GetFilmDetailByFilmURI(queryuri)
                 .then(function (detailResult) {
                     // if (detailResult) {
@@ -137,7 +144,7 @@ export default { //公开
                     let nameinfoitem = {};
                     nameinfoitem.nametype = res.nameType;
                     nameinfoitem.namelabel = res.label;
-                    resolve(nameinfoitem);                   
+                    resolve(nameinfoitem);
                 })
                 .catch((error) => {
                     reject(error);

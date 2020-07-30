@@ -35,7 +35,7 @@ Vue.use(hls)
 Vue.use(VueAwesomeSwiper)
 
 Vue.use(ElementUi);
-Vue.prototype.$axios = $axios;
+// Vue.prototype.$axios = $axios;
 
 Vue.prototype.$video = Video;
 Vue.mixin(mixin);
