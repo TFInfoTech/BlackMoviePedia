@@ -66,7 +66,7 @@ export default {
             }
           });
           this.newWaterfallData = newWaterfallData;
-          console.log("this.newWaterfallData", this.newWaterfallData);
+          // console.log("this.newWaterfallData", this.newWaterfallData);
         }
       }
     },

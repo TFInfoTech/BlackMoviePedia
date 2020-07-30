@@ -102,13 +102,13 @@ export default { //公开
             queryphoto.freetext = film.name;
             queryphoto.filmuri = film.uri;
 
-            // console.log("queryphoto", film.name,film.uri);
+            // console.log("queryphoto", queryphoto);
             this.GetPhotoByName(queryphoto)
                 .then(function (result) {
                     if (JSON.stringify(result) === "{}") {
                         result.url = require("../assets/img/MovieBackground.jpg");
                     }
-                    // console.log("result", result.filmName, result.url);
+                    // console.log("result", result);
                     // that.currentFilm = Object.assign(that.currentFilm, result);
                     resolve(result);
                 })

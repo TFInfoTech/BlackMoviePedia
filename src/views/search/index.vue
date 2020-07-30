@@ -132,7 +132,7 @@ export default {
               // that.filmList = Object.assign({}, that.filmList, result);
               that.filmList = result;
               that.searched = true;
-              console.log("that.filmList", that.filmList);
+              // console.log("that.filmList", that.filmList);
             });
             resolve();
           })

@@ -24,17 +24,17 @@ export default {
     switch (this.itemType) {
       case "film":
         var query = {
-          name: this.searchItem.filmname,
-          uri: this.searchItem.filmname,
+          name: this.searchItem.name
         };
         setTimeout(() => {
-          FilmData.GetFilmDetailOfPhoto(this.searchItem).then(
+          // console.log("this.searchItem", this.searchItem);
+          FilmData.GetFilmDetailOfPhoto(query).then(
             (data) => {
               if (data && data.length > 0) {
                 // console.log("this.searchItem", this.searchItem);
-                // console.log("data", data.filmName,data.filmuri,data.url);
-                this.displayItem.imageUrl = data[0].url;
-                this.displayItem.title = data[0].filmName;
+                // console.log("data", data);
+                this.displayItem.imageUrl = data[0].imgPath;
+                this.displayItem.title = data[0].movieName;
                 this.displayItem.linkUrl = "";
               }
               // console.log("this.displayItem", this.displayItem);

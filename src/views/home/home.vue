@@ -35,10 +35,10 @@
                                 <FilmBrief :filmList="filmList"></FilmBrief>
                             </el-tab-pane>
                             <el-tab-pane label="影星" name="3"></el-tab-pane>
-                            <!-- <el-tab-pane label="视频" name="4">
+                            <el-tab-pane label="放映厅" name="4">
                                 <FilmBriefList :filmList="filmList" :type="2"></FilmBriefList>
-                            </el-tab-pane> -->
-                            <el-tab-pane label="电影" name="5">
+                            </el-tab-pane>
+                            <el-tab-pane label="海报" name="5">
                                 <FilmBriefList :filmList="filmList" :type="1"></FilmBriefList>
                             </el-tab-pane>
                         </el-tabs>
