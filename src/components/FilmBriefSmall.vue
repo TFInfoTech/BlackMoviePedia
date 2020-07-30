@@ -62,7 +62,7 @@
             this.getVideoDetail(this.currentFilm, this.index);
         },
         watch: {
-           
+
         },
         methods: {
             //clickbutton() {
@@ -70,23 +70,23 @@
             //    console.log('是否暂停', this.a.paused)
             //    this.a.pause();
             //},
-            setVideo(videoitem) {
-                var timer;
+            setVideo(videoitem, that) {
+                that.$nextTick(() => {
+                    var timer;
 
-                clearTimeout(timer);  //清除延迟执行
+                    clearTimeout(timer);  //清除延迟执行
 
-                timer = setTimeout(() => {   //设置延迟执行
+                    timer = setTimeout(() => {   //设置延迟执行
 
-                    let myPlayer = this.$video('myVideo' + videoitem.index, {
-                        autoplay: false,
-                        preload: "auto",
-                        width: "400px",
-                        height: "200px",
-                        controls: true
-                    });
-
-                }, 1000);
-
+                        let myPlayer = that.$video('myVideo' + videoitem.index, {
+                            autoplay: false,
+                            preload: "auto",
+                            width: "400px",
+                            height: "200px",
+                            controls: true
+                        });
+                    }, 1000);
+                });
             },
             getVideoDetail(currentFilm, index) {
                 return new Promise((resolve, reject) => {
@@ -95,10 +95,12 @@
                     var that = this;
                     FilmData.GetFilmVideoDetailByFilmURI(queryuri)
                         .then(function (result) {
-                            that.videoitem = result;
-                            that.videoitem.index = index;
-                            that.setVideo(that.videoitem);
-                            resolve();
+                            if (result.videouri != '') {
+                                that.videoitem = result;
+                                that.videoitem.index = index;
+                                that.setVideo(that.videoitem, that);
+                                resolve();
+                            }
                         })
                         .catch((error) => {
                             reject(error);
