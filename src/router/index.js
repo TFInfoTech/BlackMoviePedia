@@ -26,20 +26,20 @@ const router = new Router({
             meta: {
                 title: "黑白情怀",
                 // 缓存首页
-               // keepAlive: true
+                keepAlive: true
             }
         },
         {
             path: "/movielist",
             meta: {
-                title: "黑白电影列表"
+                title: "影视厅"
             },
             component: () => import("@/views/movielist/index")
         },
         {
             path: "/actor",
             meta: {
-                title: "黑白电影列表"
+                title: "影星"
             },
             component: () => import("@/views/actor/index")
         },

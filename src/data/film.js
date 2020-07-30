@@ -85,7 +85,9 @@ export default { //公开
                     }
                     if (videoinfo.hasOwnProperty("video")) {
                         videoitem.videouri = videoinfo.video[0].videoPath;
-
+                    }
+                    else {
+                        videoitem.videouri =''
                     }
                 }
             }
