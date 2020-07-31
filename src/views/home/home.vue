@@ -34,7 +34,9 @@
                             <el-tab-pane label="随便" name="1">
                                 <FilmBrief :filmList="filmList"></FilmBrief>
                             </el-tab-pane>
-                            <el-tab-pane label="影星" name="3"></el-tab-pane>
+                            <el-tab-pane label="影星" name="3">
+                                <ActorlistBriefList></ActorlistBriefList>
+                            </el-tab-pane>
                             <el-tab-pane label="放映厅" name="4">
                                 <FilmBriefList :filmList="filmList" :type="2"></FilmBriefList>
                             </el-tab-pane>
@@ -57,13 +59,15 @@
     import FilmBrief from "@/components/FilmBrief";
     import FilmBriefList from "@/components/FilmBriefList";
     import FilmBriefListSwiper from "@/components/FilmBriefListSwiper";
+    import ActorlistBriefList from "@/components/ActorlistBriefList";
     import FilmData from "@/data/film";
     export default {
         components: {
             Footer,
             FilmBrief,
             FilmBriefList,
-            FilmBriefListSwiper
+            FilmBriefListSwiper,
+            ActorlistBriefList
         },
         data() {
             return {

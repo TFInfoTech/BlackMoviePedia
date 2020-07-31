@@ -195,7 +195,6 @@ export default { //公开
                                     photoquery.freetext = data.namelabel
                                     that.getActorPhotoByActorname(photoquery).then(
                                         (data) => {
-                                            console.log('photodata', data)
                                             if (data.length > 0) {
                                                 photoinfo.push(data);
                                             }

@@ -59,6 +59,14 @@ const router = new Router({
             component: () => import("@/views/movie/index")
         },
         {
+            name: "actor",
+            path: "/actor/:uri",
+            meta: {
+                title: "演员"
+            },
+            component: () => import("@/views/actor/detail")
+        },
+        {
             path: "/test",
             meta: {
                 title: "测试"
