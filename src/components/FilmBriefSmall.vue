@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="type===1&&videoitem.videouri!=undefined && videoitem.videouri!=''">
+    <div v-if="videoitem.videouri!=undefined && videoitem.videouri!=''">
       <!--<el-button @click="clickbutton">圆角按钮</el-button>-->
       <el-row :gutter="10">
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
@@ -9,7 +9,7 @@
               <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                 <div class="grid-content" style="text-align:center;padding:5px">
                   <video
-                    :id="'myVideo'+videoitem.index"
+                    :id="'myVideo'+index"
                     data-setup="{}"
                     class="video-js"
                     name="videoname"
@@ -68,10 +68,10 @@ export default {
       //a: {}
     };
   },
-  created() {},
-  mounted() {
+  created() {
     this.getVideoDetail(this.currentFilm, this.index);
   },
+  mounted() {},
   watch: {},
   methods: {
     //clickbutton() {
@@ -83,10 +83,10 @@ export default {
       that.$nextTick(() => {
         var timer;
 
-        let myPlayer = this.$video("myVideo" + videoitem.index, {
+        let myPlayer = this.$video("myVideo" + this.index, {
           autoplay: false,
           preload: "auto",
-          width: "400px",
+          width: "355px",
           height: "200px",
           controls: true,
         });

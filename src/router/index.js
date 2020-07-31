@@ -11,15 +11,15 @@ const router = new Router({
             path: "/",
             redirect: "/home"
         },
-         {
-             path: "/home",
-             component: () => import("@/views/actor/actorlist"),
-             meta: {
-                 title: "黑白情怀",
-                 // 缓存首页
-                 keepAlive: true
-             }
-         },
+        //  {
+        //      path: "/home",
+        //      component: () => import("@/views/actor/actorlist"),
+        //      meta: {
+        //          title: "黑白情怀",
+        //          // 缓存首页
+        //          keepAlive: true
+        //      }
+        //  },
         {
             path: "/home",
             component: () => import("@/views/home/home"),
