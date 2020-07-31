@@ -1,13 +1,13 @@
 <template>
-    <div v-if="videoitem.videouri!=null">
+    <div v-if="videoitem.videouri!=null && videoitem.videouri!=''">
 
         <!--<el-button @click="clickbutton">圆角按钮</el-button>-->
         <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                <div class="grid-movie-card bg-purple-movie-card" style="height:350px">
+                <div class="grid-movie-card bg-purple-movie-card">
                     <el-row :gutter="10">
                         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                            <div class="grid-content" style="height:200px;text-align:center">
+                            <div class="grid-content" style="text-align:center;padding:5px">
                                 <video :id="'myVideo'+videoitem.index" data-setup='{}'
                                        class="video-js" name="videoname">
                                     <source :src="videoitem.videouri" type="application/x-mpegURL">
@@ -15,7 +15,7 @@
                             </div>
                         </el-col>
                     </el-row>
-                    <el-row :gutter="10">
+                    <el-row :gutter="10" v-if="type===2">
                         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                             <div class="grid-content">
                                 <span class="--mb--rich-text"
@@ -24,7 +24,7 @@
                             </div>
                         </el-col>
                     </el-row>
-                    <el-row :gutter="10">
+                    <el-row :gutter="10" v-if="type===2">
                         <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
                             <div class="grid-content">
                                 <span class="--mb--rich-text"
@@ -49,10 +49,10 @@
     import FilmData from "@/data/film";
     export default {
         name: "FilmBriefSmall",
-        props: ['currentFilm', 'index'],
+        props: ['currentFilm', 'index','type'],
         data() {
             return {
-                videoitem: {},
+                videoitem: {videouri:'',},
                 //a: {}
             };
         },
@@ -82,7 +82,7 @@
                     let myPlayer = this.$video('myVideo' + videoitem.index, {
                         autoplay: false,
                         preload: "auto",
-                        width: "400px",
+                        width: "350px",
                         height: "200px",
                         controls: true
                     });
@@ -97,6 +97,7 @@
                     var that = this;
                     FilmData.GetFilmVideoDetailByFilmURI(queryuri)
                         .then(function (result) {
+                            console.log ('video result',result)
                             that.videoitem = result;
                             that.videoitem.index = index;
 

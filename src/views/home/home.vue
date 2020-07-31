@@ -39,7 +39,7 @@
                                 <FilmBriefList :filmList="filmList" :type="2"></FilmBriefList>
                             </el-tab-pane>
                             <el-tab-pane label="海报" name="5">
-                                <FilmBriefList :filmList="filmList" :type="1"></FilmBriefList>
+                                <FilmBriefListSwiper :filmList="filmList"></FilmBriefListSwiper>
                             </el-tab-pane>
                         </el-tabs>
                     </div>
@@ -56,12 +56,14 @@
     import Footer from "@/components/Footer";
     import FilmBrief from "@/components/FilmBrief";
     import FilmBriefList from "@/components/FilmBriefList";
+    import FilmBriefListSwiper from "@/components/FilmBriefListSwiper";
     import FilmData from "@/data/film";
     export default {
         components: {
             Footer,
             FilmBrief,
             FilmBriefList,
+            FilmBriefListSwiper
         },
         data() {
             return {

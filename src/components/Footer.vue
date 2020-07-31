@@ -81,7 +81,8 @@ export default {};
 
 <style scoped lang="less">
 .footer {
-  height: 50px;
+  background: white;
+  height: 35px;
   position: fixed;
   bottom: 0;
   width: 93%;

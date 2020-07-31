@@ -2,6 +2,11 @@
   <el-container>
     <el-header>
       <el-row :gutter="10" type="flex" align="middle">
+        <el-col :xs="2" :sm="2" :md="2" :lg="2" :xl="2">
+          <div class="grid-content" style="padding-top:10px">
+            <i class="el-icon-back" @click="back()"></i>
+          </div>
+        </el-col>
         <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
           <div class="grid-content" style="height:80px">
             <span
@@ -86,24 +91,32 @@
             >影像资料</span>
           </div>
         </el-col>
-      </el-row>      
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+          <div class="grid-content">
+            <FilmBriefList :filmList="filmList" :type="1"></FilmBriefList>
+          </div>
+        </el-col>
+      </el-row>
     </el-main>
     <el-footer>
       <Footer></Footer>
     </el-footer>
   </el-container>
 </template>
-
 <script>
 import Footer from "@/components/Footer";
+import FilmBriefList from "@/components/FilmBriefList";
 import FilmData from "@/data/film";
 export default {
   components: {
     Footer,
+    FilmBriefList,
   },
   data() {
     return {
-      activeName: "1",
+      filmList: [],
       FilePhotoList: [{ imgPath: "" }],
       VideoList: [],
       filmDetail: {
@@ -168,8 +181,12 @@ export default {
 
     this.filmDetail.name = filmObj.name;
     this.GetFilmInfo(filmObj);
+    this.filmList=[{uri:filmObj.uri}]
   },
   methods: {
+    back() {
+      history.back();
+    },
     GetFilmInfo(filmObj) {
       FilmData.GetFilmDetailOfPhoto(filmObj).then(
         (data) => {
@@ -200,7 +217,7 @@ export default {
   font-weight: 400;
 }
 .detail-title {
-  text-align: left;;
+  text-align: left;
   padding-right: 5px;
 }
 .swiper-container {
