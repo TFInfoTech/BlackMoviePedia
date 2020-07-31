@@ -29,7 +29,7 @@
 
         },
         methods: {
-           
+
             getActorListNew() {
                 let query = {};
                 query.type = '黑白';
@@ -41,19 +41,21 @@
                         list = list.concat(filmlist[i].actorList);
                     }
                     that.actorlist = that.unique(list, 'puri');
-                    
+
                     for (let j = 0; j < that.actorlist.length; j++) {
                         that.getActorDetailByUri(that.actorlist[j].puri).then(
                             (data) => {
                                 that.actorlist[j].actorDetail = data;
 
-                                
-                               
+
+
                             },
-                            (err) => { }
+                            (err) => {
+                                console.log('获取演员列表失败')
+                            }
                         );
                     }
-                    
+
                     console.log('actorlist', that.actorlist)
                 })
             },
@@ -86,13 +88,17 @@
                                             photoquery.freetext = data.namelabel
                                             FilmData.getActorPhotoByActorname(photoquery).then(
                                                 (data) => {
-                                                    console.log('photodata',data)
-                                                    photoinfo.push(data);
+                                                    console.log('photodata', data)
+                                                    if (data.length>0) {
+                                                        photoinfo.push(data);
+                                                    }
                                                 },
-                                                (err) => { }
+                                                (err) => {
+                                                    console.log('uri取照片失败', photoquery, 'err:', err)
+                                                }
                                             );
                                         },
-                                        (err) => { }
+                                        (err) => { console.log('根据uri取名字失败', actornameuri, 'err:', err) }
                                     );
                                 }
                                 else if (JSON.stringify(actorDetail.name[q]).indexOf("value") != -1) {
@@ -100,6 +106,18 @@
                                     nameinfoitem.nametype = actorDetail.name[q]['@language'];
                                     nameinfoitem.namelabel = actorDetail.name[q]['@value'];
                                     nameinfo.push(nameinfoitem);
+
+                                    let photoquery = {};
+                                    photoquery.freetext = nameinfoitem.namelabel;
+                                    FilmData.getActorPhotoByActorname(photoquery).then(
+                                        (data) => {
+                                            if (data.length > 0)
+                                                photoinfo.push(data);
+                                        },
+                                        (err) => {
+                                            console.log('根据@value取照片失败', photoquery, 'err:', err)
+                                        }
+                                    );
                                 }
                             }
                         }
@@ -111,15 +129,27 @@
                             FilmData.getActorNameByActorNameUri(actornameuri).then(
                                 (data) => {
                                     actorDetail.nameinfo = data;
+                                    let photoquery = {};
+                                    photoquery.freetext = data.namelabel;
+                                    FilmData.getActorPhotoByActorname(photoquery).then(
+                                        (data) => {
+                                            if (data.length > 0)
+                                                photoinfo.push(data);
+                                        },
+                                        (err) => {
+                                            console.log('根据(不是数组)取照片失败', photoquery, 'err:', err)
+                                        }
+                                    );
                                 },
-                                (err) => { }
+                                (err) => { console.log('根据(不是数组)uri取名字失败', actornameuri, 'err:', err) }
                             );
                         }
 
                         actorDetail.nameinfo = nameinfo;
+                        actorDetail.photoinfo = photoinfo;
                         resolve(actorDetail);
                         //console.log('actorDetail', actorDetail)
-                       // return actorDetail
+                        // return actorDetail
                     });
                 });
             },
