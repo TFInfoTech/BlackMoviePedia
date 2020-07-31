@@ -62,9 +62,6 @@
             this.getVideoDetail(this.currentFilm, this.index);
         },
         watch: {
-            'videoitem': function () {
-                this.setVideo(this.videoitem);
-            }
         },
         methods: {
             //clickbutton() {
@@ -72,20 +69,18 @@
             //    console.log('是否暂停', this.a.paused)
             //    this.a.pause();
             //},
-            setVideo(videoitem) {
-                var timer;
-
-                clearTimeout(timer);  //清除延迟执行
-
-                timer = setTimeout(() => {   //设置延迟执行
+            setVideo(videoitem, that) {
+                that.$nextTick(() => {
+                    var timer;
 
                     let myPlayer = this.$video('myVideo' + videoitem.index, {
                         autoplay: false,
                         preload: "auto",
-                        width: "350px",
+                        width: "400px",
                         height: "200px",
                         controls: true
                     });
+                    clearTimeout(timer);  //清除延迟执行
 
                 }, 1000);
 
@@ -97,11 +92,12 @@
                     var that = this;
                     FilmData.GetFilmVideoDetailByFilmURI(queryuri)
                         .then(function (result) {
-                            console.log ('video result',result)
-                            that.videoitem = result;
-                            that.videoitem.index = index;
-
-                            resolve();
+                            if (result.videouri != '') {
+                                that.videoitem = result;
+                                that.videoitem.index = index;
+                                that.setVideo(that.videoitem, that);
+                                resolve();
+                            }
                         })
                         .catch((error) => {
                             reject(error);
