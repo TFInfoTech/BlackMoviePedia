@@ -67,6 +67,7 @@ export default { //公开
         let res;
         await mservice.fetchURIDetailByURI(query).then(response => {
             res = response.result.data;
+            // console.log ('res',res)
         })
         return res;
     },
@@ -87,7 +88,7 @@ export default { //公开
                         videoitem.videouri = videoinfo.video[0].videoPath;
                     }
                     else {
-                        videoitem.videouri =''
+                        videoitem.videouri = ''
                     }
                 }
             }
@@ -170,15 +171,22 @@ export default { //公开
             queryactoruri.uri = ActorUri;
             let that = this;
             this.GetURIDetail(queryactoruri).then(function (result) {
-                
+
                 let actorDetail = result;
                 //取简介
-                if (Array.isArray(actorDetail.briefBiography)) {
-                    actorDetail.briefBiographyitem = actorDetail.briefBiography[0];
+                if (actorDetail.briefBiography) {
+                    if (Array.isArray(actorDetail.briefBiography)) {
+                        actorDetail.briefBiographyitem = actorDetail.briefBiography[0];
+                    }
+                    else {
+                        // console.log ('actorDetail.briefBiography',actorDetail.briefBiography)
+                        actorDetail.briefBiographyitem = actorDetail.briefBiography;
+                    }
+
+                } else {
+                    actorDetail.briefBiographyitem = ''
                 }
-                else {
-                    actorDetail.briefBiographyitem = actorDetail.briefBiography;
-                }
+
                 //取姓名
                 let nameinfo = [];
                 let photoinfo = [];

@@ -27,6 +27,7 @@ import 'video.js/dist/video-js.css'
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 
+
 //const hls = require("videojs-contrib-hls")
 import hls from 'videojs-contrib-hls'
 

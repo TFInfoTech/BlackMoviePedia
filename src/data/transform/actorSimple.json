@@ -1,0 +1,29 @@
+{
+    "nameinfo": {
+        "type": "array",
+        "itemtype": "object",
+        "return": {
+            "type": "key",
+            "keyLable": "nametype",
+            "keyValue": "原名"
+        },
+        "mappingName": "name"
+    },
+    "photoinfo": {
+        "type": "array",
+        "itemType": "array",
+        "return": {
+            "type": "index",
+            "index": "0",
+            "returnItem": {
+                "type": "array",
+                "itemType": "object",
+                "return": {
+                    "type": "index",
+                    "index": "0"
+                }
+            }
+        },
+        "mappingName": "photo"
+    }
+}

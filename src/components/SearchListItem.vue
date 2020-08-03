@@ -9,6 +9,7 @@
 
 <script>
 import FilmData from "@/data/film";
+import jsonTransform from "@/utils/jsonTransform";
 export default {
   name: "SearchItem",
   props: ["searchItem", "itemType", "itemIndex"],
@@ -24,7 +25,7 @@ export default {
     switch (this.itemType) {
       case "film":
         var query = {
-          name: this.searchItem.name
+          name: this.searchItem.name,
         };
         setTimeout(() => {
           // console.log("this.searchItem", this.searchItem);
@@ -43,10 +44,46 @@ export default {
           );
         }, 500 * this.itemIndex);
         break;
+      case "actor":
+        console.log("this.searchItem", this.searchItem);
+        var query = {
+          puri: this.searchItem.puri,
+        };
+        setTimeout(() => {
+          axios.get("transform/actorSimple.json").then((res) => {
+            jsonTransform.jsonTransform(
+              this.searchItem.actorDetail,
+              res.data
+            );
+          });
+        }, 2000 * this.itemIndex);
+        // setTimeout(() => {
+        //   console.log("query", this.searchItem);
+        //   FilmData.getActorDetailByUri(query).then(
+        //     (data) => {
+        //       if (data && data.length > 0) {
+        //         console.log("photoinfo", data.photoinfo);
+        //         console.log("nameinfo", data.nameinfo);
+        //         this.displayItem.imageUrl = data.photoinfo;
+        //         this.displayItem.title = data.nameinfo;
+        //         this.displayItem.linkUrl = "";
+        //       }
+        //       // console.log("this.displayItem", this.displayItem);
+        //     },
+        //     (err) => {}
+        //   );
+        // }, 500 * this.itemIndex);
+        // this.displayItem.imageUrl = this.searchItem;
+        // this.displayItem.title = this.nameinfo;
+        break;
     }
   },
   mounted() {},
-  watch: {},
+  watch: {
+    // searchItem () {
+    //     jsonTransform.jsonTransform(this.searchItem.actorDetail,this.template);
+    // }
+  },
   methods: {},
 };
 </script>

@@ -57,7 +57,7 @@
       </el-row>
       <el-row :gutter="10" type="flex" align="middle" v-if="!hasNoResult">
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-          <SearchList :waterfallData="filmList"></SearchList>
+          <SearchList :waterfallData="filmList" itemType="film"></SearchList>
         </el-col>
       </el-row>
     </el-main>

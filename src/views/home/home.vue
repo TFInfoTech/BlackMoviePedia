@@ -79,7 +79,7 @@
                         name: "田七郎",
                         uri: "http://data.library.sh.cn/dy/resource/movie/3w67jnfaot1csjxa",
                     },
-                ],
+                ]
             };
         },
         mounted() {

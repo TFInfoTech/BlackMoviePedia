@@ -1,0 +1,32 @@
+{
+    "nameinfo": {
+        "type": "array",
+        "itemType": "object",
+        "filter": [
+            {
+                "key": "nametype",
+                "values": [
+                    "原名",
+                    "chs"
+                ]
+            }
+        ],
+        "result": {
+            "count": "1"
+        },
+        "mappingName": "name"
+    },
+    "photoinfo": {
+        "type": "array",
+        "itemType": "array",
+        "result": {
+            "count": "1",
+            "type": "array",
+            "itemType": "array",
+            "result": {
+                "count": "1"
+            }
+        },
+        "mappingName": "photo"
+    }
+}
