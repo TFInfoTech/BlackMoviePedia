@@ -45,18 +45,23 @@ export default {
         }, 500 * this.itemIndex);
         break;
       case "actor":
-        console.log("this.searchItem", this.searchItem);
+        // console.log("this.searchItem", this.searchItem);
         var query = {
-          puri: this.searchItem.puri,
+          uri: this.searchItem.puri,
         };
-        setTimeout(() => {
-          axios.get("transform/actorSimple.json").then((res) => {
-            jsonTransform.jsonTransform(
-              this.searchItem.actorDetail,
-              res.data
-            );
-          });
-        }, 2000 * this.itemIndex);
+        console.log("query", query);
+        FilmData.getActorDetailByUri(query).then(
+          (data) => {
+            console.log("data", data);
+            setTimeout(() => {
+              axios.get("transform/actorSimple.json").then((res) => {
+                jsonTransform.jsonTransform(data, res.data);
+              });
+            }, 500 * this.itemIndex);
+          },
+          (err) => {}
+        );
+
         // setTimeout(() => {
         //   console.log("query", this.searchItem);
         //   FilmData.getActorDetailByUri(query).then(

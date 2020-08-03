@@ -1,7 +1,9 @@
 {
     "nameinfo": {
         "type": "array",
-        "itemType": "object",
+        "item": {
+            "type": "object"
+        },
         "filter": [
             {
                 "key": "nametype",
@@ -12,20 +14,26 @@
             }
         ],
         "result": {
-            "count": "1"
+            "count": "1",
+            "type": "object"
         },
         "mappingName": "name"
     },
     "photoinfo": {
         "type": "array",
-        "itemType": "array",
+        "item": {
+            "type": "array",
+            "item": {
+                "type": "object"
+            },
+            "result": {
+                "count": "1",
+                "type": "object"
+            }
+        },
         "result": {
             "count": "1",
-            "type": "array",
-            "itemType": "array",
-            "result": {
-                "count": "1"
-            }
+            "type": "object"
         },
         "mappingName": "photo"
     }

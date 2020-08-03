@@ -28,22 +28,23 @@ export default {
       let list = [];
       FilmData.GetFilmList(query).then(function (result) {
         let filmlist = result;
-        for (let i = 0; i < filmlist.length; i++) {
+        // for (let i = 0; i < filmlist.length; i++) {
+        for (let i = 0; i < 1; i++) {
           list = list.concat(filmlist[i].actorList);
         }
         // console.log ('list',list)
         that.actorlist = that.unique(list, "puri");
-
-        for (let j = 0; j < that.actorlist.length; j++) {
-          FilmData.getActorDetailByUri(that.actorlist[j].puri).then(
-            (data) => {
-              that.actorlist[j].actorDetail = data;
-            },
-            (err) => {
-              console.log("获取演员列表失败", err);
-            }
-          );
-        }
+// for (let j = 0; j < that.actorlist.length; j++) {
+        // for (let j = 0; j < 1; j++) {
+        //   FilmData.getActorDetailByUri(that.actorlist[j].puri).then(
+        //     (data) => {
+        //       that.actorlist[j].actorDetail = data;
+        //     },
+        //     (err) => {
+        //       console.log("获取演员列表失败", err);
+        //     }
+        //   );
+        // }
 
         console.log("actorlist", that.actorlist);
       });

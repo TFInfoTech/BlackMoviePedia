@@ -81,6 +81,7 @@ export default { //公开
                     videoitem.contributor = '';
                     videoitem.date = videoinfo.date;
                     videoitem.contributorStr = ''
+                    // console.log ('videoinfo',videoinfo)
                     for (let k = 0; k < videoinfo.contributor.length; k++) {
                         videoitem.contributorStr += videoinfo.contributor[k] + '  ';
                     }
@@ -168,10 +169,13 @@ export default { //公开
     getActorDetailByUri(ActorUri) {
         return new Promise((resolve, reject) => {
             let queryactoruri = {};
-            queryactoruri.uri = ActorUri;
+            queryactoruri.uri = ActorUri.uri;
             let that = this;
             this.GetURIDetail(queryactoruri).then(function (result) {
-
+                console.log ('result',result)
+                if (result==='数据请求异常') {
+                    return {}
+                }
                 let actorDetail = result;
                 //取简介
                 if (actorDetail.briefBiography) {
