@@ -17,6 +17,7 @@ export default {
   data() {
     return {
       displayItem: { imageUrl: "", title: "", linkUrl: "" },
+      emptyActorImage: require("../assets/img/EmptyHead.jpg")
     };
   },
   created() {
@@ -36,7 +37,7 @@ export default {
                 // console.log("data", data);
                 this.displayItem.imageUrl = data[0].imgPath;
                 this.displayItem.title = data[0].movieName;
-                this.displayItem.linkUrl = "";
+                this.displayItem.linkUrl = { name:'movie',params:{'name':this.searchItem.name,'uri':this.searchItem.uri} }
               }
               // console.log("this.displayItem", this.displayItem);
             },
@@ -49,13 +50,18 @@ export default {
         var query = {
           uri: this.searchItem.puri,
         };
-        console.log("query", query);
+        // console.log("query", query);
         FilmData.getActorDetailByUri(query).then(
           (data) => {
-            console.log("data", data);
+            // console.log("data", data);
             setTimeout(() => {
               axios.get("transform/actorSimple.json").then((res) => {
-                jsonTransform.jsonTransform(data, res.data);
+                let tranferData = jsonTransform.jsonTransform(data, res.data);
+                // console.log("tranferData", tranferData)
+                this.displayItem.imageUrl = tranferData.photo.imgPath?tranferData.photo.imgPath:this.emptyActorImage;
+                this.displayItem.title = tranferData.name.namelabel;
+                this.displayItem.linkUrl = { name:'actor',params:{'name':tranferData.name.namelabel,'uri':this.searchItem.puri} }
+                // console.log("displayItem.linkUrl", this.displayItem.linkUrl)
               });
             }, 500 * this.itemIndex);
           },

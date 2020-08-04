@@ -12,15 +12,16 @@ export default { //公开
             if (input instanceof Array) {
                 inputNode = input
             } else {
-                inputNode = input[node]
+                inputNode = input[jsonTemplate[node].mappingName]
             }
+            // console.log('jsonInput', node, inputNode)
             //初始化新对象节点
-            console.log('inputNode', inputNode)
-            console.log('templateNode', templateNode)
+            // console.log('inputNode', inputNode)
+            // console.log('templateNode', templateNode)
             if (templateNode.result.type === "object") {
-                newJson[templateNode.mappingName] = {}
+                newJson[node] = {}
             } else if (templateNode.result.type === "array") {
-                newJson[templateNode.mappingName] = []
+                newJson[node] = []
             }
             switch (templateNode.type) {
                 case 'array':
@@ -45,9 +46,9 @@ export default { //公开
                                         for (let v = 0; v < filter[k].values.length; v++) {
                                             if (source[keyLable] === filter[k].values[v]) {
                                                 if (templateNode.result.type === "object") {
-                                                    newJson[templateNode.mappingName] = Object.assign(newJson[templateNode.mappingName], source)
+                                                    newJson[node] = Object.assign(newJson[node], source)
                                                 } else if (templateNode.result.type === "array") {
-                                                    newJson[templateNode.mappingName].push(source)
+                                                    newJson[node].push(source)
                                                 }
 
                                                 returnCount--
@@ -84,24 +85,26 @@ export default { //公开
                             for (let i = 0; i < inputNode.length && returnCount > 0 && i < returnCount; i++) {
                                 // console.log ('sub inputNode[i]',inputNode[i]['undefined'])
                                 let newNode
-                                if (inputNode[i]['undefined']) {
-                                    newNode=inputNode[i]['undefined']
+                                if (inputNode[i].tempNode) {
+                                    newNode=inputNode[i].tempNode
                                 } else {
                                     newNode=inputNode[i]
                                 }
-                                newJson[templateNode.mappingName] = Object.assign(newJson[templateNode.mappingName], newNode)
+                                newJson[node] = Object.assign(newJson[node], newNode)
                             }
                         } else if (templateNode.result.type === "array") {
                             var newArray = []
+                            // console.log ('inputNode.length',inputNode.length)
                             for (let i = 0; i < inputNode.length && returnCount > 0 && i < returnCount; i++) {
+                                // console.log ('inputNode[i]',inputNode[i])
                                 newArray.push(inputNode[i])
                             }
-                            newJson[templateNode.mappingName] = newArray
+                            newJson[node] = newArray
                         }
                     }
             }
         }
-        console.log('newJson', newJson)
+        // console.log('newJson', newJson)
         return newJson
 
 

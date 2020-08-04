@@ -1,0 +1,50 @@
+{
+    "name": {
+        "type": "array",
+        "item": {
+            "type": "object"
+        },
+        "filter": [
+            {
+                "key": "nametype",
+                "values": [
+                    "原名",
+                    "chs"
+                ]
+            }
+        ],
+        "result": {
+            "count": "1",
+            "type": "object"
+        },
+        "mappingName": "nameinfo"
+    },
+    "nameinfo": {
+        "type": "array",
+        "item": {
+            "type": "object"
+        },
+        "result": {
+            "type": "array"
+        },
+        "mappingName": "nameinfo",
+        "display": {
+            "lable": "姓名",
+            "type": "table",
+            "hasHeader": "false",
+            "columns": [
+                {
+                    "column": "nametype",
+                    "dataConvertion": {
+                        "en": "英文名",
+                        "cht": "繁体名",
+                        "chs": "简体名"
+                    }
+                },
+                {
+                    "column": "namelabel"
+                }
+            ]
+        }
+    }
+}

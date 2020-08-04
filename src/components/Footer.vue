@@ -1,24 +1,28 @@
 <template>
   <el-row :gutter="10" class="footer">
-    <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
       <div class="grid-content footer-menu-item">
-        <span style="line-height:50px;width: 25; height: 25; min-height: 25; min-width: 25px;">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="svg-icon"
-            style="fill: rgba(0, 0, 0, 1);"
-            viewBox="64 64 896 896"
-            width="25"
-            height="25"
-          >
-            <path
-              d="M 946.5 505 L 534.6 93.4 a 31.93 31.93 0 0 0 -45.2 0 L 77.5 505 c -12 12 -18.8 28.3 -18.8 45.3 c 0 35.3 28.7 64 64 64 h 43.4 V 908 c 0 17.7 14.3 32 32 32 H 448 V 716 h 112 v 224 h 265.9 c 17.7 0 32 -14.3 32 -32 V 614.3 h 43.4 c 17 0 33.3 -6.7 45.3 -18.8 c 24.9 -25 24.9 -65.5 -0.1 -90.5 Z"
-            />
-          </svg>
-        </span>
+        <router-link
+          :to="{ path:'/home' }"
+        >
+          <span style="line-height:50px;width: 25; height: 25; min-height: 25; min-width: 25px;">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="svg-icon"
+              style="fill: rgba(0, 0, 0, 1);"
+              viewBox="64 64 896 896"
+              width="25"
+              height="25"
+            >
+              <path
+                d="M 946.5 505 L 534.6 93.4 a 31.93 31.93 0 0 0 -45.2 0 L 77.5 505 c -12 12 -18.8 28.3 -18.8 45.3 c 0 35.3 28.7 64 64 64 h 43.4 V 908 c 0 17.7 14.3 32 32 32 H 448 V 716 h 112 v 224 h 265.9 c 17.7 0 32 -14.3 32 -32 V 614.3 h 43.4 c 17 0 33.3 -6.7 45.3 -18.8 c 24.9 -25 24.9 -65.5 -0.1 -90.5 Z"
+              />
+            </svg>
+          </span>
+        </router-link>
       </div>
     </el-col>
-    <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
+    <!-- <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
       <div class="grid-content footer-menu-item">
         <span style="line-height:50px;width: 25; height: 25; min-height: 25; min-width: 25px;">
           <svg
@@ -71,7 +75,7 @@
           </svg>
         </span>
       </div>
-    </el-col>
+    </el-col>-->
   </el-row>
 </template>
 

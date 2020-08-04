@@ -1,5 +1,5 @@
 {
-    "nameinfo": {
+    "name": {
         "type": "array",
         "item": {
             "type": "object"
@@ -17,9 +17,9 @@
             "count": "1",
             "type": "object"
         },
-        "mappingName": "name"
+        "mappingName": "nameinfo"
     },
-    "photoinfo": {
+    "photo": {
         "type": "array",
         "item": {
             "type": "array",
@@ -35,6 +35,6 @@
             "count": "1",
             "type": "object"
         },
-        "mappingName": "photo"
+        "mappingName": "photoinfo"
     }
 }

@@ -37,11 +37,12 @@ const router = new Router({
             component: () => import("@/views/movielist/index")
         },
         {
-            path: "/actor",
+            name: "actor",
+            path: "/actor/:name/:uri",
             meta: {
                 title: "影星"
             },
-            component: () => import("@/views/actor/index")
+            component: () => import("@/views/actor/detail")
         },
         {
             path: "/search",
