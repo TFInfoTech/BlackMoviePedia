@@ -1,31 +1,28 @@
 import * as mservice from '@/api/movie';
 export default { //公开
-    async GetFilmDetailByFilmURI(queryuri) {
-        let videoitem = {};
-        // console.log('queryuri', queryuri)
-        await mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
-            // console.log('fetchFilmDetailByFilmURI', response)
-            if (response.result == "0") {
-                if (response.data[0]) {
-                    videoitem = response.data[0];
+    GetFilmDetailByFilmURI(queryuri) {
+        return new Promise((resolve, reject) => {
+            let videoitem = {};
+            // console.log('queryuri', queryuri)
+            mservice.fetchFilmDetailByFilmURI(queryuri).then(response => {
+                // console.log('fetchFilmDetailByFilmURI', response)
+                if (response.result == "0") {
+                    if (response.data[0]) {
+                        videoitem = response.data[0];
 
-                    // if (videoinfo[0].video) {
-                    //     videoitem.videouri = videoinfo[0].video[0].videoPath;
-                    //     videoitem.filmname = videoinfo[0].title;
-                    //     videoitem.contributor = '';
-                    //     videoitem.date = videoinfo[0].date;
-                    videoitem.contributorStr = ''
-                    for (let k = 0; k < videoitem.contributor.length; k++) {
-                        videoitem.contributorStr += videoitem.contributor[k] + '  ';
+                        videoitem.contributorStr = ''
+                        for (let k = 0; k < videoitem.contributor.length; k++) {
+                            videoitem.contributorStr += videoitem.contributor[k] + '  ';
+                        }
                     }
-                    // console.log('videoitem', videoitem)
-                    // }
-
                 }
-            }
 
-        })
-        return videoitem
+                resolve(videoitem);
+            })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
     },
     GetPhotoByName(queryphoto) {
         var urlitem = [];
@@ -55,13 +52,19 @@ export default { //公开
         });
         // console.log("urlitem", urlitem.filmName, urlitem.url);
     },
-    async GetFilmList(query) {
-        let filmlist = [];
-        await mservice.fetchList(query).then(response => {
-            if (response.result == "0")
-                filmlist = response.data;
-        })
-        return filmlist;
+    GetFilmList(query) {
+        return new Promise((resolve, reject) => {
+
+            let filmlist = [];
+            mservice.fetchList(query).then(response => {
+                if (response.result == "0")
+                    filmlist = response.data;
+                resolve(filmlist);
+            })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
     },
     async GetURIDetail(query) {
         let res;
@@ -81,6 +84,7 @@ export default { //公开
                     videoitem.contributor = '';
                     videoitem.date = videoinfo.date;
                     videoitem.contributorStr = ''
+                    // console.log ('videoinfo',videoinfo)
                     for (let k = 0; k < videoinfo.contributor.length; k++) {
                         videoitem.contributorStr += videoinfo.contributor[k] + '  ';
                     }
@@ -168,10 +172,13 @@ export default { //公开
     getActorDetailByUri(ActorUri) {
         return new Promise((resolve, reject) => {
             let queryactoruri = {};
-            queryactoruri.uri = ActorUri;
+            queryactoruri.uri = ActorUri.uri;
             let that = this;
             this.GetURIDetail(queryactoruri).then(function (result) {
-
+                console.log ('result',result)
+                if (result === '数据请求异常') {
+                    return {}
+                }
                 let actorDetail = result;
                 //取简介
                 if (actorDetail.briefBiography) {

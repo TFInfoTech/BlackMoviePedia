@@ -112,6 +112,7 @@
                             that.$nextTick(() => {
                                 // that.filmList = Object.assign({},that.filmList, result);
                                 that.filmList = result;
+                                console.log('that.filmList',that.filmList);
                             });
                             resolve();
                         })

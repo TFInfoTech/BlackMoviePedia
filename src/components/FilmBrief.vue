@@ -2,18 +2,20 @@
   <div>
     <el-row :gutter="10">
       <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-        <div class="grid-movie-card bg-purple-movie-card">
+        <div class="grid-movie-card bg-purple-movie-card" style="padding-bottom:3px">
           <el-row :gutter="10">
             <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-              <div class="grid-content" style="height:250px;text-align:center">
-                <router-link :to="{ name:'movie',params:{'name':currentFilm.name,'uri':currentFilm.movie} }">
-                <img
-                  :src="currentFilm.imgPath"
-                  class="slide-image"
-                  :data-uri="currentFilm.uri"
-                  :data-name="currentFilm.name"
-                  style="margin-top:3px"
-                />
+              <div class="grid-content" style="height:300px;text-align:center">
+                <router-link
+                  :to="{ name:'movie',params:{'name':currentFilm.name,'uri':currentFilm.movie} }"
+                >
+                  <img
+                    :src="currentFilm.imgPath"
+                    class="slide-image"
+                    :data-uri="currentFilm.uri"
+                    :data-name="currentFilm.name"
+                    style="margin-top:3px"
+                  />
                 </router-link>
               </div>
             </el-col>
@@ -48,7 +50,7 @@
               </div>
             </el-col>
           </el-row>
-          <el-row :gutter="10">
+          <!-- <el-row :gutter="10">
             <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
               <div class="grid-content">
                 <span
@@ -66,7 +68,7 @@
                 ></span>
               </div>
             </el-col>
-          </el-row>
+          </el-row>-->
         </div>
       </el-col>
     </el-row>
@@ -114,7 +116,12 @@ export default {
       emptyUrl: require("../assets/img/MovieBackground.jpg"),
       filmNum: 0,
       filmIndex: 0,
-      currentFilm: { imgPath: this.emptyUrl, contributorStr: "",name:"",date:'' },
+      currentFilm: {
+        imgPath: this.emptyUrl,
+        contributorStr: "",
+        name: "",
+        date: "",
+      },
     };
   },
   created() {},
@@ -163,8 +170,10 @@ export default {
         (data) => {
           if (data && data.length > 0) {
             // console.log ('filmObj', filmObj)
-            // console.log("data[0]", data[0]);
-            this.currentFilm = Object.assign(this.currentFilm, data[0]);
+            // console.log("GetFilmDetailOfPhoto", data[0]);
+            setTimeout(() => {
+              this.currentFilm = Object.assign({},this.currentFilm, data[0]);
+            }, 500 * this.itemIndex);
             // console.log("currentFilm", this.currentFilm);
           }
         },
@@ -172,8 +181,10 @@ export default {
       );
       FilmData.GetFilmDetailOfUri(filmObj).then(
         (data) => {
-          // console.log ('filmObj', filmObj)
-          this.currentFilm = Object.assign(this.currentFilm, data);
+          // console.log ('GetFilmDetailOfUri', data)
+          setTimeout(() => {
+          this.currentFilm = Object.assign({},this.currentFilm, data);
+          }, 1000 * this.itemIndex);
           // console.log ('currentFilm', this.currentFilm)
         },
         (err) => {}
