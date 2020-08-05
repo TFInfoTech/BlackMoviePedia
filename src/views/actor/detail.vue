@@ -53,7 +53,7 @@ export default {
       name: this.$route.params.name,
     };
     this.GetJtTemplate().then(() => {
-        console.log("this.jtTemplate", this.template)
+      console.log("this.jtTemplate", this.template);
       this.GetActorInfo(this.actorObj);
     });
     // this.GetFilmInfo(this.actorObj);
@@ -68,7 +68,7 @@ export default {
       FilmData.getActorDetailByUri(actorObj).then(
         (data) => {
           that.actorInfo = Object.assign({}, that.actorInfo, data);
-        //   console.log("that.actorInfo", that.actorInfo);
+          //   console.log("that.actorInfo", that.actorInfo);
         },
         (err) => {
           console.log("获取演员详细信息失败，失败原因：", err);
@@ -81,7 +81,7 @@ export default {
         axios
           .get("transform/actorFull.json")
           .then((res) => {
-            that.template = Object.assign ({},that.template,res.data);
+            that.template = Object.assign({}, that.template, res.data);
             console.log("that.jtTemplate", that.template);
             resolve();
           })

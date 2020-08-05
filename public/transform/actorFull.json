@@ -14,10 +14,29 @@
             }
         ],
         "result": {
-            "count": "1",
+            "count": 1,
             "type": "object"
         },
         "mappingName": "nameinfo"
+    },
+    "photo": {
+        "type": "array",
+        "item": {
+            "type": "array",
+            "item": {
+                "type": "object"
+            }
+        },
+        "result": {
+            "type": "array",
+            "contactSubArrays": true
+        },
+        "mappingName": "photoinfo",
+        "display": {
+            "label": "相册",
+            "type": "imageSlide",
+            "imageColumn": "imgPath"
+        }
     },
     "nameinfo": {
         "type": "array",
@@ -29,9 +48,9 @@
         },
         "mappingName": "nameinfo",
         "display": {
-            "lable": "姓名",
+            "label": "称谓",
             "type": "table",
-            "hasHeader": "false",
+            "showHeader": false,
             "columns": [
                 {
                     "column": "nametype",
@@ -39,10 +58,118 @@
                         "en": "英文名",
                         "cht": "繁体名",
                         "chs": "简体名"
-                    }
+                    },
+                    "style": "font-size:8px;white-space:normal"
                 },
                 {
-                    "column": "namelabel"
+                    "column": "namelabel",
+                    "style": "font-size:8px;white-space:normal"
+                }
+            ]
+        }
+    },
+    "gender": {
+        "type": "string",
+        "result": {
+            "type": "string"
+        },
+        "mappingName": "gender",
+        "display": {
+            "label": "性别",
+            "type": "label"
+        }
+    },
+    "birthday": {
+        "type": "string",
+        "result": {
+            "type": "string"
+        },
+        "mappingName": "birthday",
+        "display": {
+            "label": "出生日期",
+            "type": "label"
+        }
+    },
+    "briefBiography": {
+        "type": "array",
+        "item": {
+            "type": "string"
+        },
+        "result": {
+            "type": "array"
+        },
+        "mappingName": "briefBiography",
+        "display": {
+            "label": "简介",
+            "type": "table",
+            "showHeader": false,
+            "columns": [
+                {
+                    "column": "singleValue",
+                    "style": "font-size:8px;white-space:normal"
+                }
+            ]
+        }
+    },
+    "createdWork": {
+        "type": "array",
+        "item": {
+            "type": "string"
+        },
+        "result": {
+            "type": "array"
+        },
+        "mappingName": "createdWork",
+        "display": {
+            "label": "作品集",
+            "type": "table",
+            "showHeader": false,
+            "columns": [
+                {
+                    "column": "singleValue",
+                    "style": "font-size:8px;white-space:normal"
+                }
+            ]
+        }
+    },
+    "noteOfSource": {
+        "type": "array",
+        "item": {
+            "type": "string"
+        },
+        "result": {
+            "type": "array"
+        },
+        "mappingName": "noteOfSource",
+        "display": {
+            "label": "资料来源",
+            "type": "table",
+            "showHeader": false,
+            "columns": [
+                {
+                    "column": "singleValue",
+                    "style": "font-size:8px;white-space:normal"
+                }
+            ]
+        }
+    },
+    "relatedOrganization": {
+        "type": "array",
+        "item": {
+            "type": "string"
+        },
+        "result": {
+            "type": "array"
+        },
+        "mappingName": "relatedOrganization",
+        "display": {
+            "label": "从属机构",
+            "type": "table",
+            "showHeader": false,
+            "columns": [
+                {
+                    "column": "singleValue",
+                    "style": "font-size:8px;white-space:normal"
                 }
             ]
         }

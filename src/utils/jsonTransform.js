@@ -71,7 +71,7 @@ export default { //公开
                             var newArray = []
                             for (let i = 0; i < inputNode.length && returnCount > 0 && i < returnCount; i++) {
                                 //在外面包一层临时的对象，为了在上面循环的时候可以找到一个节点
-                                var tempTNode = {} 
+                                var tempTNode = {}
                                 tempTNode.tempNode = templateNode.item
                                 // console.log('22222222')
                                 newArray.push(this.jsonTransform(inputNode[i], tempTNode))
@@ -83,31 +83,60 @@ export default { //公开
                         // 处理完下级节点后汇总到当前节点
                         if (templateNode.result.type === "object") {
                             for (let i = 0; i < inputNode.length && returnCount > 0 && i < returnCount; i++) {
-                                // console.log ('sub inputNode[i]',inputNode[i]['undefined'])
-                                let newNode
-                                if (inputNode[i].tempNode) {
-                                    newNode=inputNode[i].tempNode
-                                } else {
-                                    newNode=inputNode[i]
-                                }
+                                // console.log ('sub inputNode[i]',inputNode[i])
+                                let newNode = this.removeTempNode(inputNode[i])
                                 newJson[node] = Object.assign(newJson[node], newNode)
                             }
                         } else if (templateNode.result.type === "array") {
                             var newArray = []
                             // console.log ('inputNode.length',inputNode.length)
-                            for (let i = 0; i < inputNode.length && returnCount > 0 && i < returnCount; i++) {
+                            let totalCount = 0
+                            for (let i = 0; i < inputNode.length && returnCount > 0 && totalCount < returnCount; i++) {
                                 // console.log ('inputNode[i]',inputNode[i])
-                                newArray.push(inputNode[i])
+                                // 如果当前节点类型不是数组或object
+                                var tNode
+                                if (templateNode.item.type === "string") {
+                                    tNode = { singleValue: inputNode[i] }
+                                } else {
+                                    let newNode = this.removeTempNode(inputNode[i])
+                                    // 如果要合并当前数组下的下级数组
+                                    // console.log ('newNode',newNode)
+                                    if (templateNode.result.contactSubArrays && templateNode.result.contactSubArrays === true) {
+                                        for (let j = 0; j < newNode.length && returnCount > 0 && totalCount < returnCount; j++) {
+                                            let subNewNode = this.removeTempNode(newNode[j])
+                                            newArray.push(subNewNode)
+                                            totalCount++
+                                        }
+                                        continue
+                                    } else {
+                                        tNode = newNode
+                                    }
+                                }
+                                newArray.push(tNode)
+                                totalCount++
                             }
                             newJson[node] = newArray
+                            
                         }
                     }
+                    break
+                case 'string':
+                    if (templateNode.result.type === 'string') {
+                        newJson[node] = inputNode
+                    }
+
             }
         }
         // console.log('newJson', newJson)
         return newJson
+    },
 
-
-
+    removeTempNode(input) {
+        if (input.tempNode) {
+            return input.tempNode
+        } else {
+            return input
+        }
     }
+
 }
