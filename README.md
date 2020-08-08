@@ -1,8 +1,6 @@
 # 黑白电影赏析
 
 #### 启动项目
-1. npm i 安装依赖
-1. npm run serve 启动项目
 1. cd server  (接口目录)
 1. npm i 
 1. npm run dev
