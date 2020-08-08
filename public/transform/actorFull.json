@@ -1,5 +1,6 @@
 {
     "name": {
+        "mappingName": "nameinfo",
         "type": "array",
         "item": {
             "type": "object"
@@ -16,10 +17,10 @@
         "result": {
             "count": 1,
             "type": "object"
-        },
-        "mappingName": "nameinfo"
+        }
     },
     "photo": {
+        "mappingName": "photoinfo",
         "type": "array",
         "item": {
             "type": "array",
@@ -31,7 +32,6 @@
             "type": "array",
             "contactSubArrays": true
         },
-        "mappingName": "photoinfo",
         "display": {
             "label": "相册",
             "type": "imageSlide",
@@ -39,6 +39,7 @@
         }
     },
     "nameinfo": {
+        "mappingName": "nameinfo",
         "type": "array",
         "item": {
             "type": "object"
@@ -46,7 +47,6 @@
         "result": {
             "type": "array"
         },
-        "mappingName": "nameinfo",
         "display": {
             "label": "称谓",
             "type": "table",
@@ -69,28 +69,29 @@
         }
     },
     "gender": {
+        "mappingName": "gender",
         "type": "string",
         "result": {
             "type": "string"
         },
-        "mappingName": "gender",
         "display": {
             "label": "性别",
             "type": "label"
         }
     },
     "birthday": {
+        "mappingName": "birthday",
         "type": "string",
         "result": {
             "type": "string"
         },
-        "mappingName": "birthday",
         "display": {
             "label": "出生日期",
             "type": "label"
         }
     },
     "briefBiography": {
+        "mappingName": "briefBiography",
         "type": "array",
         "item": {
             "type": "string"
@@ -98,7 +99,6 @@
         "result": {
             "type": "array"
         },
-        "mappingName": "briefBiography",
         "display": {
             "label": "简介",
             "type": "table",
@@ -112,6 +112,7 @@
         }
     },
     "createdWork": {
+        "mappingName": "createdWork",
         "type": "array",
         "item": {
             "type": "string"
@@ -119,7 +120,6 @@
         "result": {
             "type": "array"
         },
-        "mappingName": "createdWork",
         "display": {
             "label": "作品集",
             "type": "table",
@@ -133,6 +133,7 @@
         }
     },
     "noteOfSource": {
+        "mappingName": "noteOfSource",
         "type": "array",
         "item": {
             "type": "string"
@@ -140,7 +141,6 @@
         "result": {
             "type": "array"
         },
-        "mappingName": "noteOfSource",
         "display": {
             "label": "资料来源",
             "type": "table",
@@ -154,6 +154,7 @@
         }
     },
     "relatedOrganization": {
+        "mappingName": "relatedOrganization",
         "type": "array",
         "item": {
             "type": "string"
@@ -161,7 +162,6 @@
         "result": {
             "type": "array"
         },
-        "mappingName": "relatedOrganization",
         "display": {
             "label": "从属机构",
             "type": "table",

@@ -175,7 +175,9 @@ export default { //公开
             queryactoruri.uri = ActorUri.uri;
             let that = this;
             this.GetURIDetail(queryactoruri).then(function (result) {
-                console.log ('result',result)
+                // console.log ('result',result)
+                // console.log ('result json',JSON.stringify(result))
+
                 if (result === '数据请求异常') {
                     return {}
                 }
@@ -269,7 +271,8 @@ export default { //公开
                 actorDetail.nameinfo = nameinfo;
                 actorDetail.photoinfo = photoinfo;
                 resolve(actorDetail);
-                //console.log('actorDetail', actorDetail)
+                // console.log('actorDetail', actorDetail)
+                // console.log ('result json',JSON.stringify(actorDetail))
                 // return actorDetail
             });
         });

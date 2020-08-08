@@ -98,8 +98,8 @@ export default {};
   }
 }
 .footer-menu-item {
-  height: 50px;
-  line-height: 50px;
+  height: 35px;
+  line-height: 35px;
   text-align: center;
 }
 </style>
