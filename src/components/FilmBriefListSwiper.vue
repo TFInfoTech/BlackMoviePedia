@@ -2,17 +2,6 @@
   <div>
     <swiper ref="mySwiper" :options="swiperOptions">
       <SwiperItem v-for="(item,index) in filmList" :key="index" :filmitem="item" :itemIndex="index"></SwiperItem>
-      <!-- <swiper-slide v-for="(item,index) in filmList" :key="index">
-        <img
-          :src="emptyUrl"
-          class="slide-image"
-        />
-      </swiper-slide> -->
-      <!-- <swiper-slide>Slide 1</swiper-slide>
-      <swiper-slide>Slide 2</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 4</swiper-slide> -->
-
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
@@ -83,5 +72,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+.swiper-container {
+  width: 320px;
+  height: 500px;
+  text-align: center;
+}
 </style>

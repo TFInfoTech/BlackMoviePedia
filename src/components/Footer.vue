@@ -1,7 +1,5 @@
 <template>
-  <el-row :gutter="10" class="footer">
-    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-      <div class="grid-content footer-menu-item">
+      <div class="footer footer-menu-item">
         <router-link
           :to="{ path:'/home' }"
         >
@@ -21,7 +19,6 @@
           </span>
         </router-link>
       </div>
-    </el-col>
     <!-- <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
       <div class="grid-content footer-menu-item">
         <span style="line-height:50px;width: 25; height: 25; min-height: 25; min-width: 25px;">
@@ -76,7 +73,7 @@
         </span>
       </div>
     </el-col>-->
-  </el-row>
+
 </template>
 
 <script>
@@ -89,7 +86,7 @@ export default {};
   height: 35px;
   position: fixed;
   bottom: 0;
-  width: 93%;
+  width: 90%;
   .text {
     color: #797d82;
   }

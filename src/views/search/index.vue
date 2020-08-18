@@ -9,7 +9,7 @@
         </el-col>
         <el-col :xs="22" :sm="22" :md="22" :lg="22" :xl="22">
           <div class="grid-content bg-purple">
-            <el-input placeholder="请输入影片名或人名" v-model="searchInput" class="input-with-select">
+            <el-input placeholder="请输入影片关键字" v-model="searchInput" class="input-with-select">
               <el-button slot="append" icon="el-icon-search" @click="search()"></el-button>
             </el-input>
           </div>

@@ -32,16 +32,16 @@
                     <div class="grid-content" style="height:600px">
                         <el-tabs v-model="activeName" @tab-click="handleClick">
                             <el-tab-pane label="随便" name="1">
-                                <FilmBrief :filmList="filmList"></FilmBrief>
+                                <FilmBrief :filmList="filmList" v-if="filmList"></FilmBrief>
                             </el-tab-pane>
                             <el-tab-pane label="影星" name="3">
                                 <ActorlistBriefList></ActorlistBriefList>
                             </el-tab-pane>
                             <el-tab-pane label="放映厅" name="4">
-                                <FilmBriefList :filmList="filmList" :type="2"></FilmBriefList>
+                                <FilmBriefList :filmList="filmList" :type="2" v-if="filmList"></FilmBriefList>
                             </el-tab-pane>
                             <el-tab-pane label="海报" name="5">
-                                <FilmBriefListSwiper :filmList="filmList"></FilmBriefListSwiper>
+                                <FilmBriefListSwiper :filmList="filmList" v-if="filmList"></FilmBriefListSwiper>
                             </el-tab-pane>
                         </el-tabs>
                     </div>

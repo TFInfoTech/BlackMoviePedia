@@ -23,13 +23,14 @@
           <div v-if="block.display.type==='imageSlide'">
             <swiper ref="mySwiper" :options="swiperOption">
               <swiper-slide v-for="(item,index) in jtData[index]" :key="index">
-                <img :src="item[block.display.imageColumn]" class="slide-image" />
+                <img :src="item[block.display.imageColumn]" class="jt-slide-image" />
               </swiper-slide>
             </swiper>
           </div>
         </el-collapse-item>
       </el-collapse>
     </div>
+    <el-backtop></el-backtop>
   </div>
 </template>
 
@@ -118,7 +119,12 @@ export default {
   color: black !important;
 }
 .el-collapse-item__content {
-  padding-top:3px !important;
-  padding-bottom:3px !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+.jt-slide-image {
+  width: 90%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>

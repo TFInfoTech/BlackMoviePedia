@@ -28,8 +28,8 @@ export default {
       let list = [];
       FilmData.GetFilmList(query).then(function (result) {
         let filmlist = result;
-        // for (let i = 0; i < filmlist.length; i++) {
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < filmlist.length; i++) {
+        // for (let i = 0; i < 1; i++) {
           list = list.concat(filmlist[i].actorList);
         }
         // console.log ('list',list)

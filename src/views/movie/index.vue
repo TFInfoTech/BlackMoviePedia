@@ -193,7 +193,7 @@ export default {
           if (data && data.length > 0) {
             // this.FilePhotoList = Object.assign(this.FilePhotoList, data);
             this.FilePhotoList = data;
-            console.log("FilePhotoList", this.FilePhotoList);
+            // console.log("FilePhotoList", this.FilePhotoList);
           }
         },
         (err) => {}

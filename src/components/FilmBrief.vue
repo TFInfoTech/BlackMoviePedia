@@ -11,7 +11,7 @@
                 >
                   <img
                     :src="currentFilm.imgPath"
-                    class="slide-image"
+                    class="brief-big-image"
                     :data-uri="currentFilm.uri"
                     :data-name="currentFilm.name"
                     style="margin-top:3px"
@@ -86,7 +86,11 @@
       </el-col>
       <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
         <div class="grid-content bg-transparent">
-          <el-button type="info" round>要欣赏</el-button>
+          <router-link
+            :to="{ name:'movie',params:{'name':currentFilm.name,'uri':currentFilm.movie} }"
+          >
+            <el-button type="info" round>要欣赏</el-button>
+          </router-link>
         </div>
       </el-col>
       <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
@@ -172,7 +176,7 @@ export default {
             // console.log ('filmObj', filmObj)
             // console.log("GetFilmDetailOfPhoto", data[0]);
             setTimeout(() => {
-              this.currentFilm = Object.assign({},this.currentFilm, data[0]);
+              this.currentFilm = Object.assign({}, this.currentFilm, data[0]);
             }, 500 * this.itemIndex);
             // console.log("currentFilm", this.currentFilm);
           }
@@ -183,7 +187,7 @@ export default {
         (data) => {
           // console.log ('GetFilmDetailOfUri', data)
           setTimeout(() => {
-          this.currentFilm = Object.assign({},this.currentFilm, data);
+            this.currentFilm = Object.assign({}, this.currentFilm, data);
           }, 1000 * this.itemIndex);
           // console.log ('currentFilm', this.currentFilm)
         },
@@ -201,5 +205,10 @@ export default {
 .grid-movie-card {
   border-radius: 8px;
   /* min-height: 36px; */
+}
+.brief-big-image {
+  width: 90%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>

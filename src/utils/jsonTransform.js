@@ -2,7 +2,7 @@ export default { //公开
     jsonTransform(input, template) {
         let newJson = {}
         let jsonTemplate = template
-        console.log('jsonInput', input)
+        // console.log('jsonInput', input)
         for (var node in jsonTemplate) {
 
             // console.log('jsonTemplate', node, jsonTemplate[node])
@@ -128,7 +128,7 @@ export default { //公开
 
             }
         }
-        console.log('newJson', newJson)
+        // console.log('newJson', newJson)
         return newJson
     },
 
